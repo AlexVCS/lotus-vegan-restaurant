@@ -85,7 +85,7 @@
     const links = [...jump.querySelectorAll("a")];
     const openHash = () => {
       const target = location.hash && document.querySelector(location.hash);
-      if (target?.matches("details.menu-group")) {
+      if (target?.matches?.("details.menu-group")) {
         groups.querySelectorAll("details.menu-group").forEach((group) => { group.open = group === target; });
         window.setTimeout(() => target.scrollIntoView({ block: "start" }), 0);
       }
