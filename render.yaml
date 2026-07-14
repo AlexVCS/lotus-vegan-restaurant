@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: lotus-vegan
+    runtime: docker
+    plan: free
+    healthCheckPath: /healthz
+    autoDeployTrigger: commit
