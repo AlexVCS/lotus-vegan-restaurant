@@ -82,6 +82,7 @@
       groups.append(details);
     });
 
+    const links = [...jump.querySelectorAll("a")];
     const openHash = () => {
       const target = location.hash && document.querySelector(location.hash);
       if (target?.matches("details.menu-group")) {
@@ -100,7 +101,6 @@
     window.addEventListener("hashchange", openHash);
     openHash();
 
-    const links = [...jump.querySelectorAll("a")];
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
