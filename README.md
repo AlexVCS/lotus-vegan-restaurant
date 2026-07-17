@@ -11,3 +11,5 @@ go run .
 ```
 
 Open <http://localhost:8080>.
+
+The standalone menu is available at <http://localhost:8080/menu>.

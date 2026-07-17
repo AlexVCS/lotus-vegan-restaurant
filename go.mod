@@ -2,7 +2,7 @@ module github.com/AlexVCS/lotus-vegan
 
 go 1.26.5
 
-require github.com/DonaldMurillo/gofastr v0.21.0
+require github.com/DonaldMurillo/gofastr v0.25.0
 
 require (
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
