@@ -6,6 +6,16 @@ Live site: [lotus-vegan.onrender.com](https://lotus-vegan.onrender.com/)
 
 ## Run locally
 
+This command requires the [GoFastr CLI](https://github.com/DonaldMurillo/gofastr#quickstart) to be installed.
+
+```bash
+gofastr dev
+```
+
+The development server automatically reloads when Go, JavaScript, CSS, or HTML files change.
+
+Alternatively, run the project without the GoFastr CLI:
+
 ```bash
 go run .
 ```
