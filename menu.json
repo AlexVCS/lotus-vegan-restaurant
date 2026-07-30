@@ -1,0 +1,905 @@
+{
+  "allergyNote": {
+    "label": "Allergy note",
+    "text": "Please tell the team about any allergies. Not all ingredients are listed, and the kitchen is not fully gluten-free; cross-contamination from gluten and nuts is possible. No menu item exchanges."
+  },
+  "groups": [
+    {
+      "slug": "appetizers",
+      "title": "Appetizers",
+      "navLabel": "Appetizers",
+      "items": [
+        {
+          "title": "1. Golden Rolls (4)",
+          "price": "$6.99",
+          "description": "Rice noodle, carrot, cabbage, tofu, potato, golden roll seasoning, wrapped in the golden roll paper"
+        },
+        {
+          "title": "2. Drumsticks (4)",
+          "price": "$8.99",
+          "description": "Crispy soy protein served with sweet and sour sauce."
+        },
+        {
+          "title": "3. Crispy Wonton (6)",
+          "price": "$6.99",
+          "description": "Taro, wonton seasoning, stuffed in the wonton paper, served with sweet & sour sauce"
+        },
+        {
+          "title": "4. Vegan Nuggets (4)",
+          "price": "$7.99",
+          "description": "soy protein nuggets in the crumbled crispy, dipping in vegan ranch."
+        },
+        {
+          "title": "5. Fresh sprouts roll (2)",
+          "price": "$8.99",
+          "description": "Alfalfa sprouts, mung bean sprouts, avocado, mint, romaine lettuce, seitan protein sticks, with the peanut sauce."
+        },
+        {
+          "title": "6. Fresh Spring Rolls (2)",
+          "price": "$6.99",
+          "description": "Carrot, jicama, romaine lettuce, basil, tofu, wrapped in rice paper, dipping in peanut sauce.",
+          "dietary": [
+            "gf"
+          ]
+        },
+        {
+          "title": "6B. Fresh Basil Rolls (2)",
+          "price": "$6.99",
+          "description": "Romaine lettuce, basil, rice noodles, vegan shredded pork (sweet potato, golden potato, soy bean curd, vermicelli), wrapped in rice paper, dipping in vegan fish sauce.",
+          "dietary": [
+            "gf"
+          ]
+        },
+        {
+          "title": "7. Vegan Wings (6)",
+          "price": "$9.99",
+          "description": "Soy protein dipped in a flour and bread crumb batter then fried to perfection, served with vegan ranch."
+        },
+        {
+          "title": "8. Golden Tofu (4)",
+          "price": "$7.99",
+          "description": "Tofu dipped in a perfectly seasoned crumb then deep fried for crispy, served with vegan ranch."
+        },
+        {
+          "title": "9. Vegan Cheese Sticks (4)",
+          "price": "$7.99",
+          "description": "Vegan mozzarella in the battered fried flour, crumbed bread, dipping in SERVED WITH the MARINARA SAUCE."
+        },
+        {
+          "title": "10. BBQ Sticks (2)",
+          "price": "$7.99",
+          "description": "Seasoning textured soy protein with sesame seed, lemongrass, served with hot sauce."
+        },
+        {
+          "title": "11. Crispy cha-cha (6)",
+          "price": "$8.49",
+          "description": "soy protein crescents battered and seasoned with select spices served with sweet and sour sauce. (vegan shrimp)"
+        },
+        {
+          "title": "12. Vegan Sushi",
+          "price": "$10.99",
+          "description": "carrot, white rice, avocado, vegan bacon, cucumber, sesame seeds, roll in seaweed sheet."
+        },
+        {
+          "title": "13. Wonton soup",
+          "price": "S $6.99 / L $9.99",
+          "description": "wontons, broccoli, carrot, fried shallot oil, cilantro, green onion, cilantro, seasoning, in the wonton soup base."
+        },
+        {
+          "title": "14. Golden soup",
+          "price": "S $6.99 / L $9.50",
+          "description": "red lentils, onion, carrot, curry paste, celery, sweet potato, coconut milk, black pepper, mushroom seasoning.",
+          "dietary": [
+            "gf",
+            "sf"
+          ]
+        },
+        {
+          "title": "15. Potato kale soup",
+          "price": "S $6.99 / L $9.50",
+          "description": "Vegan cream cheese, potato, sweet potato, golden potato, carrot, celery, onion, kale, black pepper, mushroom seasoning.",
+          "dietary": [
+            "gf"
+          ]
+        },
+        {
+          "title": "16. Saigon sweet & sour soup",
+          "price": "$13.99",
+          "description": "tofu, soy protein, tomato, pineapple, okra, celery, bean sprouts, basil, fried shallot oil, served with white rice or noodles."
+        },
+        {
+          "title": "Garlic Knots",
+          "price": "$8.99",
+          "description": "Strips of pizza dough tied in a knot, baked, and then topped with melted butter, garlic and parsley."
+        }
+      ]
+    },
+    {
+      "slug": "raw-meals-and-salads",
+      "title": "Raw Meals & Salads",
+      "navLabel": "Raw Meals & Salads",
+      "items": [
+        {
+          "title": "17. Raw Heavenly Soup",
+          "price": "$9.99",
+          "description": "organic zucchini, red bell peppers, onions, with fabulous Pho soup base.",
+          "dietary": [
+            "gf",
+            "sf"
+          ]
+        },
+        {
+          "title": "19. Avocado Salad",
+          "price": "$14.99",
+          "description": "organic spinach, vegan bites protein, avocado, sweet onion, juicy tomato, cucumber, apple with ranch dressing."
+        },
+        {
+          "title": "20. Raw Taco",
+          "price": "$14.99",
+          "description": "walnut, sun-dried tomato, lettuce, avocado, tomato, sweet onion, parsley and the raw taco seasoning",
+          "dietary": [
+            "gf",
+            "sf"
+          ]
+        },
+        {
+          "title": "21. Raw Pasta",
+          "price": "$14.99",
+          "description": "organic zucchini noodles, served with a flavorful raw tomato sauce, made with tomato, cashew nuts, garlic, onion, bell pepper, parsley, and sun-dried tomatoes, served cold.",
+          "dietary": [
+            "gf",
+            "sf"
+          ]
+        },
+        {
+          "title": "22. Lotus Root Salad",
+          "price": "$14.99",
+          "description": "Lotus root, carrot, daikon, tofu, basil and sweet and sour dressing.",
+          "dietary": [
+            "gf"
+          ]
+        },
+        {
+          "title": "23. Mango Salad",
+          "price": "$14.99",
+          "description": "Lettuce, tomato, cucumber, onion, mango and grilled vegan bites protein tossed in coconut lime dressing."
+        }
+      ]
+    },
+    {
+      "slug": "noodle-soups",
+      "title": "Noodle Soups",
+      "navLabel": "Noodle Soups",
+      "items": [
+        {
+          "title": "24. Vietnamese Crab Tapioca Noodle Soup (Bánh Canh Cua)",
+          "price": "$14.99",
+          "description": "Rice noodle, tofu, broccoli, carrot, vegan shrimp, vegan crab, onion, cilantro, jalapeno, soup base."
+        },
+        {
+          "title": "25. Rainbow Noodle Soup (Bun Rieu)",
+          "price": "$14.99",
+          "description": "Rice noodle, tofu, tomato, broccoli, soy protein, onion, cilantro, basil, bean sprouts, jalapeno, shredded cabbage, soup base."
+        },
+        {
+          "title": "26. Fabulous Pho",
+          "price": "$14.99",
+          "description": "Aulac Traditional Noodle Soup: fresh rice noodle, gluten slices, soy protein, tofu, served with basil, bean sprouts, jalapeno, cilantro, and onion."
+        },
+        {
+          "title": "27. Royal Noodle Soup (Bun Hue)",
+          "price": "$13.99",
+          "description": "Royal noodle soup base, rice noodle, gluten slices, soy protein, tofu, served with basil, bean sprouts, cilantro, jalapeno, and onion."
+        },
+        {
+          "title": "28. Fresh Noodle Soup",
+          "price": "$14.99",
+          "description": "Wonton soup base, wontons, broccoli, carrot, wheat noodle, soy protein, tofu, and served with shredded lettuce, bean sprouts, cilantro, jalapeno, and onion."
+        },
+        {
+          "title": "29. Queen’s Sweet Sour Hotpot (for 2)",
+          "price": "$28.99",
+          "description": "Tofu, tomato, pineapple, okra, celery, bean sprouts, mint, protein, fresh white beech mushroom, served with rice noodle."
+        },
+        {
+          "title": "30. King’s Garden Hot Pot (for 2)",
+          "price": "$28.99",
+          "description": "Tofu, soy protein, carrot, broccoli, bok choy, Napa, taro, vegan seafood, fresh white beech mushroom, served with rice noodle."
+        }
+      ]
+    },
+    {
+      "slug": "subs-and-burgers",
+      "title": "Subs & Burgers",
+      "navLabel": "Subs & Burgers",
+      "note": "Choice of Side: Fries, Mashed potatoes , Salad, or Soup (Golden, Potato kale, or Veggie)",
+      "items": [
+        {
+          "title": "31. Aulac Sub (Banh Mi)",
+          "price": "$14.99",
+          "description": "Seasoned gluten slices, tomato, jalapeno, cucumber, lettuce, cilantro, vegan butter, and sandwich sauce, in a toasted baguette."
+        },
+        {
+          "title": "31B. Delight Soy Sub",
+          "price": "$14.99",
+          "description": "grilled delight soy protein, tomato, lettuce, onion, pickles, sandwich sauce, vegan butter, all in toast baguette"
+        },
+        {
+          "title": "32A. Beyond Meat Sausage",
+          "price": "$14.99",
+          "description": "hot or sweet italian sausage, shredded salad, tomato, sweet onion, pickles, bell pepper, vegan butter, vegan cheese, and sandwich sauce."
+        },
+        {
+          "title": "32B. Vegan Bacon Sub",
+          "price": "$14.99",
+          "description": "Vegan bacon, shredded salad, tomato, sweet onion, pickles, vegan cheese, vegan butter, and sandwich sauce."
+        },
+        {
+          "title": "33. Gardein Burger",
+          "price": "$15.99",
+          "description": "Grilled buns, vegan patty, sweet onions, romaine lettuce, tomatoes, vegan butter, sandwich sauce, onions, pickles, vegan cheese."
+        },
+        {
+          "title": "34. American Panini",
+          "price": "$14.99",
+          "description": "Grilled sour-dough bread, smoked Tofurky, coleslaw, vegan butter, vegan cheese, pickles, and sandwich sauce."
+        },
+        {
+          "title": "35. Tampa Bay Panini",
+          "price": "$14.99",
+          "description": "Grilled sour-dough bread, gardein brown soy protein grilled in the teriyaki sauce, coleslaw, apple slices, vegan butter, vegan cheese, pickles, and sandwich sauce."
+        },
+        {
+          "title": "36. Beyond Meat Burger",
+          "price": "$16.99",
+          "description": "grilled burger buns, beyond meat patty, vegan butter, vegan cheese, romaine lettuce, tomatoes, onions, pickles, and sandwich sauce."
+        },
+        {
+          "title": "37. Portobello Burger",
+          "price": "$15.99",
+          "description": "Grilled burger buns, grilled portobello mushroom , Alfalfa sprouts, mung bean sprouts, avocado, parsley, onion, black pepper, lemon."
+        },
+        {
+          "title": "38. Impossible Burger",
+          "price": "$16.99",
+          "description": "grilled burger buns, impossible burger patty, romaine lettuce, vegan butter, onion, vegan cheese, pickles, tomato, sandwich sauce."
+        },
+        {
+          "title": "39. Vegan Fish Burger",
+          "price": "$14.99",
+          "description": "Grilled burger buns, vegan fish patty, romaine lettuce, vegan butter, onion, vegan cheese, pickles, tomato, sandwich sauce."
+        },
+        {
+          "title": "39B. Vegan Fish Panini",
+          "price": "$14.99",
+          "description": "Grilled sour-dough bread, vegan fish, coleslaw, apple slices, vegan butter, vegan cheese, pickles, and sandwich sauce"
+        }
+      ]
+    },
+    {
+      "slug": "fresh-wraps",
+      "title": "Fresh Wraps",
+      "navLabel": "Fresh Wraps",
+      "note": "Choice of Side: Fries, Mashed potatoes , Salad, or Soup (Golden, Potato Kale, or Veggie)",
+      "items": [
+        {
+          "title": "40. Gardener’s Wrap",
+          "price": "$14.99",
+          "description": "Seitan strips, crispy salad greens, sweet onions, pickles, avocado, and juicy tomatoes, all wrapped in a whole wheat tortilla with special sauce."
+        },
+        {
+          "title": "41. BBQ Wrap",
+          "price": "$14.99",
+          "description": "Seitan strips, crispy salad greens, sweet onions, avocado, and juicy tomatoes, all wrapped in a whole wheat tortilla with BBQ sauce."
+        },
+        {
+          "title": "42. Portobello Wrap",
+          "price": "$14.99",
+          "description": "Grilled portobello mushroom, seitan strips, onion, tomatoes, crispy lettuce, avocado and vegan ranch, all wrapped in a whole-wheat tortilla."
+        },
+        {
+          "title": "43B. Vegan Ocean Wrap",
+          "price": "$14.99",
+          "description": "Vegan fish, cauliflower rice, organic apple, spinach, onion with ranch, all wrapped in a whole-wheat tortilla."
+        }
+      ]
+    },
+    {
+      "slug": "stir-fried-noodles",
+      "title": "Stir Fried Noodles",
+      "navLabel": "Stir Fried Noodles",
+      "items": [
+        {
+          "title": "44. Portobello Noodle",
+          "price": "$17.99",
+          "description": "Portobello mushroom, wheat noodle, soy protein, bell pepper, onion, bok choy, in ginger sauce."
+        },
+        {
+          "title": "46. Pad Thai",
+          "price": "$14.99",
+          "description": "Rice noodle, bean sprouts, carrot, broccoli, tofu, onion, ground peanut, in Pad Thai peanut sauce. (Peanut allergy alert)",
+          "dietary": [
+            "gf"
+          ]
+        },
+        {
+          "title": "47. BBQ Vermicelli - (Not Stir-Fried)",
+          "price": "$15.49",
+          "description": "Rice noodle, grilled BBQ stick, golden roll, shredded lettuce, bean sprouts, cucumber, basil, jicama, carrot, roasted peanut, served with homemade sweet and sour sauce."
+        },
+        {
+          "title": "47A. Basil Vermicelli - (Not Stir-Fried)",
+          "price": "$14.99",
+          "description": "Rice noodle, shredded lettuce, bean sprouts, cucumber, basil, roasted peanut, served with homemade sweet and sour sauce."
+        },
+        {
+          "title": "47B. Traditional Spaghetti",
+          "price": "$14.99",
+          "description": "Wheat noodles, bay leaves, tofu, plant-based meatballs, broccoli, mushroom, zucchini, bell peppers, onion, cilantro, tomato sauce."
+        },
+        {
+          "title": "47C. Vegan Mac and Cheese",
+          "price": "$13.99",
+          "description": "Macaroni pasta, vegan cheese, soy milk, broccoli."
+        },
+        {
+          "title": "48. Pan Fried Rice-Noodle (Pho Ap Chao)",
+          "price": "$17.99",
+          "description": "Fried fresh flat rice noodle, soy protein, tofu, broccoli, carrot, cabbage, napa, zucchini, cauliflower, mushroom, stir fried on top of the pan-fried noodle, in ginger sauce."
+        },
+        {
+          "title": "48A. Lotus Noodle",
+          "price": "$15.99",
+          "description": "Thick rice noodle, tofu, bok choy, broccoli, shredded carrot, bean sprouts, onion, in teriyaki sauce.",
+          "dietary": [
+            "gf"
+          ]
+        },
+        {
+          "title": "49. Singapore Noodle",
+          "price": "$14.99",
+          "description": "Singapore noodle, tofu, broccoli, bean sprouts, bell peppers, onion, in curry sauce.",
+          "dietary": [
+            "gf"
+          ]
+        },
+        {
+          "title": "50. Japanese Soba Noodle",
+          "price": "$14.99",
+          "description": "Buckwheat soba noodle, broccoli, carrot, tofu, onion, sesame oil, sesame seeds, stir fried with amino soy sauce, avocado on the side."
+        },
+        {
+          "title": "51. Crispy Noodle",
+          "price": "$16.99",
+          "description": "Crispy noodle base topped with tofu, soy protein, broccoli, cabbage, carrot, mushroom, onion, zucchini, cauliflower, in ginger sauce."
+        },
+        {
+          "title": "52. Chow-Mein Noodle",
+          "price": "$14.99",
+          "description": "Wheat noodles, tofu, sliced protein, broccoli, carrot, onion, cabbage, in teriyaki sauce."
+        }
+      ]
+    },
+    {
+      "slug": "lunch-special",
+      "title": "Lunch Special",
+      "navLabel": "Lunch Special",
+      "note": "Available from 11:00am - 4:00pm",
+      "items": [
+        {
+          "title": "Rice combo 1:",
+          "description": "White Fried Rice, Basil Roll, Golden Roll, Grilled BBQ stick, Broccoli and Veggie Soup",
+          "copyPreserved": true
+        },
+        {
+          "title": "Rice combo 2:",
+          "description": "White Fried Rice, Basil Roll, Golden Roll, Grilled BBQ stick, Spinach and Veggie Soup",
+          "copyPreserved": true
+        }
+      ]
+    },
+    {
+      "slug": "rice-dishes",
+      "title": "Rice Dishes",
+      "navLabel": "Rice Dishes",
+      "note": "Comes With a Side of White Rice or Brown Rice ($2.00)",
+      "items": [
+        {
+          "title": "53. Heavenly White Fried Rice",
+          "price": "$14.99",
+          "description": "Tofu, organic mix veggies, broccoli, curry seasoning and soy sauce.",
+          "dietary": [
+            "gf"
+          ]
+        },
+        {
+          "title": "53. Heavenly Brown Fried Rice",
+          "price": "$15.99",
+          "description": "Tofu, organic mix veggies, broccoli, curry seasoning and soy sauce.",
+          "dietary": [
+            "gf"
+          ]
+        },
+        {
+          "title": "54. Eggplant Tofu",
+          "price": "$14.99",
+          "description": "Japanese eggplant, soft tofu, broccoli, mushroom, onion, basil, in stir fry sauce, served with rice.",
+          "dietary": [
+            "gf"
+          ]
+        },
+        {
+          "title": "55. Orange Protein",
+          "price": "$16.99",
+          "description": "(Vegan bites or vegan fish) bell peppers, pineapple, onion, zucchini, and mushroom in homemade sweet & sour sauce, served with rice."
+        },
+        {
+          "title": "56. Bok Choy Elevation",
+          "price": "$16.99",
+          "description": "Bok choy, soy protein, bell peppers, onion, in savory ginger sauce, served with rice."
+        },
+        {
+          "title": "57. Vegan Ginger Soy Protein",
+          "price": "$17.99",
+          "description": "Ginger soy protein, broccoli, zucchini, fresh mushroom, bell peppers and onion, sautéed in ginger sauce, served with rice."
+        },
+        {
+          "title": "58. Vegan Black Pepper Steaks",
+          "price": "$17.99",
+          "description": "Black pepper steak protein, broccoli, zucchini, cabbage, bell peppers, onion in teriyaki sauce, served with rice."
+        },
+        {
+          "title": "59. Kung Pao Protein",
+          "price": "$17.99",
+          "description": "Kung pao soy protein, bell peppers, onion, cabbage, cauliflower, peanuts, zucchini, stir fried in kung pao sauce, served with rice."
+        },
+        {
+          "title": "61. Lemongrass Tofu",
+          "price": "$14.99",
+          "description": "Fried tofu topped with sautéed lemongrass and special spice, served with fresh tomato, cucumber and romaine lettuce, served with rice.",
+          "dietary": [
+            "gf"
+          ]
+        },
+        {
+          "title": "62. Spicy Cha-Cha",
+          "price": "$16.99",
+          "description": "Soy protein crescents (vegan shrimp) battered and seasoned with select spices, served with bell pepper, onion, celery and lettuce, served with rice."
+        },
+        {
+          "title": "63. Mix Vegetable Delight",
+          "price": "$15.99",
+          "description": "Tofu, broccoli, carrot, cabbage, napa cabbage, fresh mushroom, onion, cauliflower, zucchini, in ginger sauce, served with rice.",
+          "dietary": [
+            "gf"
+          ]
+        },
+        {
+          "title": "64. Tropical Veggies",
+          "price": "$15.99",
+          "description": "Pineapple, tofu, broccoli, carrot, cabbage, napa cabbage, fresh mushroom, zucchini, cauliflower, stir-fried in curry sauce, served with rice.",
+          "dietary": [
+            "gf"
+          ]
+        },
+        {
+          "title": "65. Sweet Sour Divine",
+          "price": "$15.99",
+          "description": "Crispy tofu, bell peppers, pineapple, onion, zucchini, and mushroom, in homemade sweet and sour sauce, served with rice."
+        },
+        {
+          "title": "66. Portobello Galaxy",
+          "price": "$16.99",
+          "description": "Grilled portobello, soy protein, bell pepper, broccoli, onion, in ginger sauce, served with rice."
+        },
+        {
+          "title": "67. Golden Beauty",
+          "price": "$15.99",
+          "description": "Stir fried tofu or soy protein, ground lemongrass, bell peppers, celery, served with rice."
+        },
+        {
+          "title": "69. Guru Curry",
+          "price": "$14.99",
+          "description": "An exotic blend of curry, soy protein, tofu, potato, onion, carrot, taro, and spices in rich coconut curry sauce, served with rice."
+        },
+        {
+          "title": "70. Brussels Sprouts Curry",
+          "price": "$16.99",
+          "description": "Brussels sprouts, vegan bites, bell peppers, pineapple, onion, in curry sauce, served with rice."
+        },
+        {
+          "title": "71. Crispy Cauliflower",
+          "price": "$16.99",
+          "description": "Cauliflower, crumbled bread, bell peppers, celery, onion, salad, tomato, cucumber, served with rice."
+        },
+        {
+          "title": "72. Under the Seaweed (CÁ KHO TỘ)",
+          "price": "$14.99",
+          "description": "Vegan fish, soy sauce, tofu, mushroom, tomato, romaine lettuce, cucumber, served with rice."
+        },
+        {
+          "title": "74. Sesame Tofu",
+          "price": "$15.99",
+          "description": "Choice of tofu (GF), vegan bites, or vegan fish flavor protein. Grilled tofu stir fried in teriyaki sauce, lettuce, tomato, cucumber and topped with sesame, served with rice.",
+          "dietary": [
+            "gf"
+          ]
+        },
+        {
+          "title": "75B. Vegan Soy Ribs",
+          "price": "$16.99",
+          "description": "Grilled soy ribs, vegan shredded veggies, vegan \"egg\" tofu, served with salad, rice and veggie soup."
+        },
+        {
+          "title": "76. Fresh Chickpeas Curry",
+          "price": "$15.99",
+          "description": "Fresh chickpeas, tofu, zucchini, onion, bell peppers, curry sauce, served with rice.",
+          "dietary": [
+            "gf"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "dim-sum",
+      "title": "Dim Sum",
+      "navLabel": "Dim Sum",
+      "items": [
+        {
+          "title": "1. Green Onion Rolls",
+          "price": "$6.00",
+          "description": "Wheat flour, soybean, green onion, yeast."
+        },
+        {
+          "title": "2. Rice Buns",
+          "price": "$7.00",
+          "description": "Wheat flour, rice, carrot, soy."
+        },
+        {
+          "title": "3. Fried Turnip Cake",
+          "price": "$6.00",
+          "description": "Rice flour, radish, tapioca starch, soybean.",
+          "dietary": [
+            "gf"
+          ]
+        },
+        {
+          "title": "4. Steamed Taro Buns",
+          "price": "$7.00",
+          "description": "Wheat flour, taro, corn starch, yeast, baking soda."
+        },
+        {
+          "title": "5. Steamed Vegetable Dumplings",
+          "price": "$7.00",
+          "description": "Spinach, cabbage, corn, vermicelli, soy flour."
+        },
+        {
+          "title": "6. Vegan Chive Cake",
+          "price": "$6.00",
+          "description": "Rice flour, tapioca starch, chive leaf.",
+          "dietary": [
+            "gf"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "extra-sides",
+      "title": "Extra Sides",
+      "navLabel": "Extra Sides",
+      "items": [
+        {
+          "title": "White Rice",
+          "price": "$2.00"
+        },
+        {
+          "title": "Brown Rice",
+          "price": "$2.50"
+        },
+        {
+          "title": "Large French Fries",
+          "price": "$4.50"
+        },
+        {
+          "title": "Small French Fries",
+          "price": "$3.00"
+        },
+        {
+          "title": "Small Green Salad",
+          "price": "$4.99"
+        },
+        {
+          "title": "Small Steamed Veggies",
+          "price": "$6.50"
+        },
+        {
+          "title": "French Bread",
+          "price": "$2.00"
+        },
+        {
+          "title": "Rice Noodles",
+          "price": "$3.00"
+        }
+      ]
+    },
+    {
+      "slug": "beverages-fresh-juices-fruit-teas",
+      "title": "Beverages: Fresh Juices / Fruit Teas",
+      "navLabel": "Juices & teas",
+      "items": [
+        {
+          "title": "Sunlight Juice",
+          "price": "$7.50",
+          "description": "Organic apple, pineapple, orange, pomegranate."
+        },
+        {
+          "title": "Root Juice",
+          "price": "$7.50",
+          "description": "Organic carrot, organic beet, organic turnip, potato, organic apple, sweet potato, jicama, ginger."
+        },
+        {
+          "title": "Organic Green Apple Juice",
+          "price": "$7.99",
+          "description": "Organic green apple, ginger."
+        },
+        {
+          "title": "Organic Carrot Juice",
+          "price": "$6.50"
+        },
+        {
+          "title": "Green Goddess",
+          "price": "$7.50",
+          "description": "Organic spinach, kiwi, organic apple, organic celery, organic cucumber, lemon."
+        },
+        {
+          "title": "Healthy Pink Juice",
+          "price": "$6.50",
+          "description": "Organic apple, orange, organic beet, pineapple, ginger, lemon, organic carrot."
+        },
+        {
+          "title": "Super Green",
+          "price": "$6.50",
+          "description": "Organic kale, organic cucumber, romaine, organic apple, parsley, lime, organic celery, ginger."
+        },
+        {
+          "title": "Fresh Passion Fruit",
+          "price": "$6.75"
+        },
+        {
+          "title": "Pineapple Juice",
+          "price": "$6.75"
+        },
+        {
+          "title": "Fresh Aloe Vera with Basil Seeds",
+          "price": "$4.99"
+        },
+        {
+          "title": "Lotus Fruit Tea",
+          "price": "$7.50",
+          "description": "(Green tea or jasmine tea) kiwi, pineapple, orange, apple, lychee, sugar."
+        },
+        {
+          "title": "Lychee Rose Tea",
+          "price": "$6.99"
+        },
+        {
+          "title": "Peach Tea",
+          "price": "$6.99"
+        },
+        {
+          "title": "Milk Passion Fruit (*New)",
+          "price": "$6.99"
+        },
+        {
+          "title": "Salt Lemonade Tea (*New)",
+          "price": "$6.99"
+        },
+        {
+          "title": "Blue Sky (*New)",
+          "price": "$6.50",
+          "description": "Add topping options ($0.75): grass jelly, pop rock boba (lychee or peach), mix fruits jelly, black boba (tapioca)."
+        }
+      ]
+    },
+    {
+      "slug": "beverages-fresh-smoothies",
+      "title": "Beverages: Fresh Smoothies",
+      "navLabel": "Fresh Smoothies",
+      "note": "Fresh smoothies:",
+      "items": [
+        {
+          "title": "Fresh Aloe Vera Pineapple",
+          "price": "$6.99",
+          "description": "Fresh aloe vera, pineapple, orange, banana, lemon, organic sugar."
+        },
+        {
+          "title": "Sunshine Blissful",
+          "price": "$6.99",
+          "description": "Pineapple, orange, papaya, turmeric, date, organic sugar."
+        },
+        {
+          "title": "Daily Green",
+          "price": "$7.50",
+          "description": "Organic spinach, organic kale, kiwi, date, lemon, organic sugar, avocado."
+        },
+        {
+          "title": "Avocado Smoothie",
+          "price": "$6.50",
+          "description": "Avocado, kale, organic sugar, soy milk."
+        },
+        {
+          "title": "Strawberry Banana",
+          "price": "$6.99",
+          "description": "Organic strawberry, banana, cashew nut, soymilk, organic sugar."
+        },
+        {
+          "title": "Blueberry Smoothie",
+          "price": "$6.99",
+          "description": "Organic blueberry, banana, cashew nut, soymilk, organic sugar."
+        },
+        {
+          "title": "Blackberry Smoothie",
+          "price": "$6.99",
+          "description": "Organic blackberry, banana, cashew nut, soymilk, organic sugar."
+        },
+        {
+          "title": "Raspberry Smoothie",
+          "price": "$6.99",
+          "description": "Organic raspberry, banana, cashew nut, soy milk, organic sugar."
+        },
+        {
+          "title": "Mix Berries Smoothie",
+          "price": "$6.99",
+          "description": "Organic mix berries, banana, cashew nut, soy milk, organic sugar."
+        },
+        {
+          "title": "Mango Smoothie",
+          "price": "$6.50",
+          "description": "Mango, soy milk, organic sugar, lemon."
+        },
+        {
+          "title": "Mangonada",
+          "price": "$7.50",
+          "description": "Fresh mango, lime, chamoy, tajin, sugar."
+        },
+        {
+          "title": "Taro Boba",
+          "price": "$7.50",
+          "description": "Fresh taro, soy milk, organic sugar, boba."
+        }
+      ]
+    },
+    {
+      "slug": "additional-beverages",
+      "title": "Additional Beverages",
+      "navLabel": "More drinks",
+      "items": [
+        {
+          "title": "Thai Iced Tea - (Thai Tea and Coconut Milk)",
+          "price": "$5.99"
+        },
+        {
+          "title": "Thai Iced Tea Boba",
+          "price": "$6.50"
+        },
+        {
+          "title": "Iced Matcha Latte",
+          "price": "$5.99"
+        },
+        {
+          "title": "Iced Vietnamese Coffee",
+          "price": "$5.99"
+        },
+        {
+          "title": "Grass Jelly Coffee",
+          "price": "$6.50"
+        },
+        {
+          "title": "Coffee Frappuccino",
+          "price": "$6.99"
+        },
+        {
+          "title": "Matcha Frappuccino",
+          "price": "$6.99"
+        },
+        {
+          "title": "Iced Tea",
+          "price": "$2.95"
+        },
+        {
+          "title": "Vegan Chocolate Milk",
+          "price": "$5.99"
+        },
+        {
+          "title": "Natural Soda",
+          "price": "$ 2.99",
+          "description": "Cola, root beer, ginger ale."
+        },
+        {
+          "title": "Mother Kombucha",
+          "price": "$4.99"
+        },
+        {
+          "title": "Yerba Mate:",
+          "price": "$4.49"
+        },
+        {
+          "title": "Hot Teas:",
+          "price": "$2.99",
+          "description": "Green tea, jasmine, oolong tea."
+        }
+      ]
+    },
+    {
+      "slug": "desserts",
+      "title": "Desserts",
+      "navLabel": "Desserts",
+      "items": [
+        {
+          "title": "Sesame Ball",
+          "price": "$1.99",
+          "description": "Rice flour, mung bean, coconut milk, sesame seeds.",
+          "dietary": [
+            "gf"
+          ]
+        },
+        {
+          "title": "Vanilla Cheesecake",
+          "price": "$4.99",
+          "description": "Soy cream cheese, cane sugar, tofu, vanilla extract, wheat flour, sunflower oil, lemon juice."
+        },
+        {
+          "title": "Raw Strawberry Cheesecakes",
+          "price": "$6.50",
+          "description": "Almonds, walnuts, raisins, cashew, lemon, agave, coconut, vanilla, strawberry.",
+          "dietary": [
+            "gf"
+          ]
+        },
+        {
+          "title": "Raw Chocolate Cheesecakes",
+          "price": "$6.50",
+          "description": "Almonds, walnuts, raisins, cashew, lemon, agave, coconut, vanilla, cacao powder.",
+          "dietary": [
+            "gf"
+          ]
+        },
+        {
+          "title": "Carrot Cake",
+          "price": "$5.50",
+          "description": "Flour, carrot, walnut, cinnamon, canola oil, sugar, baking soda, baking powder, orange."
+        },
+        {
+          "title": "Chocolate Cake",
+          "price": "$5.50",
+          "description": "Canola oil, soymilk, sugar, egg replacement, vanilla, salt, cream cheese, flour, cacao powder."
+        },
+        {
+          "title": "Vanilla Cake",
+          "price": "$4.99",
+          "description": "Vanilla, soymilk, sugar, egg replacement, gluten."
+        },
+        {
+          "title": "Cookies",
+          "price": "$2.00",
+          "description": "Chocolate chip: flour, vanilla, butter, sugar, chocolate chips. Oatmeal: cranberry, oatmeal, butter, flour, sugar."
+        },
+        {
+          "title": "Graham Cracker",
+          "price": "$5.49",
+          "description": "Chocolate, vegan whipped cream (coconut milk, powdered sugar, shortening), graham cracker crumbs."
+        },
+        {
+          "title": "Caramel Flan",
+          "price": "$ 4.99",
+          "description": "Flour, soy milk, coffee, almond milk, sugar."
+        },
+        {
+          "title": "Banana Cake",
+          "price": "$ 4.50",
+          "description": "Banana, coconut milk, tapioca starch, sugar, shredded coconut."
+        }
+      ]
+    }
+  ]
+}

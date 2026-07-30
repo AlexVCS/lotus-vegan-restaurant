@@ -10,6 +10,7 @@ import (
 	"github.com/DonaldMurillo/gofastr/framework"
 )
 
+//go:generate go run ./cmd/genmenu
 //go:embed public
 var siteFiles embed.FS
 

@@ -297,8 +297,7 @@ html[data-theme="dark"] .theme-icon-moon { opacity: 0; transform: rotate(-18deg)
 .menu-item-dietary { display: inline-flex; flex: 0 0 auto; gap: .3rem; white-space: nowrap; }
 .menu-item-name .dots { flex: 1; border-bottom: 1px dotted var(--menu-line); }
 .menu-price { color: var(--accent-lime); font-weight: 600; white-space: nowrap; }
-.menu-item p { max-width: 620px; margin: .6rem 0 0; color: var(--menu-muted); font-size: .9rem; line-height: 1.7; text-transform: lowercase; }
-.menu-item p::first-letter { text-transform: uppercase; }
+.menu-item p { max-width: 620px; margin: .6rem 0 0; color: var(--menu-muted); font-size: .9rem; line-height: 1.7; }
 .menu-item-copy-preserved p { text-transform: none; }
 .menu-notice { scroll-margin-top: 90px; margin-top: 4rem; padding: 1.5rem 0; display: grid; grid-template-columns: 1fr 3fr; gap: 2rem; border-block: 1px solid var(--menu-line); }
 .menu-notice span { color: var(--accent-lime); text-transform: uppercase; letter-spacing: .07em; font-size: .9rem; font-weight: 600; }
