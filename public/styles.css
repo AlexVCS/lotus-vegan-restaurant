@@ -30,7 +30,7 @@
   --pickup-border: var(--color-border-strong);
 }
 
-html[data-theme="light"] {
+:root {
   --header-bg: rgba(245, 240, 229, .95);
   --control-bg: #fffaf0;
   --focus: #a6321b;
@@ -67,7 +67,7 @@ html[data-theme="light"] {
   --noise-opacity: .16;
 }
 
-html[data-theme="dark"] {
+:root[data-color-scheme="dark"] {
   --header-bg: rgba(10, 23, 17, .95);
   --control-bg: #152b22;
   --focus: #d5ed74;
@@ -139,8 +139,8 @@ em { font-style: normal; }
 .theme-icon { width: 20px; height: 20px; position: absolute; inset: 0; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; transition: opacity var(--transition), transform var(--transition); }
 .theme-icon-sun { opacity: 0; transform: rotate(18deg) scale(.7); }
 .theme-icon-moon { opacity: 1; transform: rotate(0) scale(1); }
-html[data-theme="dark"] .theme-icon-sun { opacity: 1; transform: rotate(0) scale(1); }
-html[data-theme="dark"] .theme-icon-moon { opacity: 0; transform: rotate(-18deg) scale(.7); }
+:root[data-color-scheme="dark"] .theme-icon-sun { opacity: 1; transform: rotate(0) scale(1); }
+:root[data-color-scheme="dark"] .theme-icon-moon { opacity: 0; transform: rotate(-18deg) scale(.7); }
 .theme-toggle-label { min-width: 31px; font-size: .78rem; font-weight: 600; }
 .nav-toggle { width: 44px; height: 44px; display: none; border: 1px solid var(--line); border-radius: 50%; padding: .55rem; background: var(--control-bg); cursor: pointer; }
 .nav-toggle span:not(.sr-only) { display: block; width: 22px; height: 1.5px; margin: 5px auto; background: currentColor; }
