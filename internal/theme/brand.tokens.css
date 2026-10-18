@@ -2,23 +2,20 @@
    theme token, so the dark values below flip with data-color-scheme the
    same way the built-in palette does. */
 
-/* Lotus lime: the quick-facts and visit bands, menu prices and accents. */
+/* Lotus lime: the gluten-free badge, the hero stamp and menu accents. */
 @property --color-brand-lime { syntax: "<color>"; inherits: true; initial-value: #cae75d; }
-/* Lotus gold: the pizza band and the contact form's tab. */
+/* Lotus gold: the pizza band's highlight and the contact card's tab. */
 @property --color-brand-gold { syntax: "<color>"; inherits: true; initial-value: #d8a332; }
-/* The fill of the gluten-free dietary badge. */
-@property --color-dietary-gf { syntax: "<color>"; inherits: true; initial-value: #c6e356; }
-/* The fill of the soy-free dietary badge. */
-@property --color-dietary-sf { syntax: "<color>"; inherits: true; initial-value: #e97757; }
-/* The ink on both dietary badges (the badges keep their fills in dark mode). */
-@property --color-dietary-ink { syntax: "<color>"; inherits: true; initial-value: #0d2b20; }
+/* Ink on the lime and gold brand fills (the hero stamp), in both schemes. */
+@property --color-brand-ink { syntax: "<color>"; inherits: true; initial-value: #0d2b20; }
+/* The soy-free badge: a light coral that reads on the forest menu band. */
+@property --color-dietary-sf { syntax: "<color>"; inherits: true; initial-value: #f5ab92; }
 
 @media (--dark) {
   :root {
     --color-brand-lime: #d4ec72;
     --color-brand-gold: #e7ba51;
-    --color-dietary-gf: #cfe866;
-    --color-dietary-sf: #ee8668;
-    --color-dietary-ink: #0b2219;
+    --color-brand-ink: #0d2b20;
+    --color-dietary-sf: #f7b6a0;
   }
 }

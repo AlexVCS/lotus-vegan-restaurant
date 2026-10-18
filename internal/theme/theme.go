@@ -68,8 +68,95 @@ var Dark = uitheme.Overrides{
 // before it is returned, so a bad edit panics at boot rather than
 // shipping unreadable buttons.
 func Lotus() style.Theme {
-	dark := Dark
-	o := Light
+	return build(Light, Dark)
+}
+
+// The page bands. Each is the full Lotus theme with the band's palette
+// swapped in, so a ui.Themed scope re-declares every token (fonts,
+// shadows, brand tokens) and the components inside it read the band's
+// colours. Every band carries a dark palette, so it follows the
+// visitor's scheme like the page does.
+var (
+	// LimeBand is the quick-facts and visit band: lime in light mode,
+	// a quiet deep green in dark mode.
+	LimeBand = band(uitheme.Overrides{
+		Background: "#cae75d", Surface: "#d6ee7c", SurfaceSoft: "#bcd94f",
+		Border: "#a3bd45", BorderStrong: "#7d9433",
+		Text: "#173c2d", TextMuted: "#304a20", TextSubtle: "#3a5226",
+		Primary: "#173c2d", PrimaryFg: "#f8f3e8",
+		Accent: "#7f2b16", Danger: "#7f2b16",
+	}, uitheme.Overrides{
+		Background: "#153126", Surface: "#1a3a2d", SurfaceSoft: "#214537",
+		Border: "#2f5143", BorderStrong: "#52685e",
+		Text: "#f7f2e8", TextMuted: "#c8d6cd", TextSubtle: "#aebfb5",
+		Primary: "#d5ed74", PrimaryFg: "#10231b",
+		Accent: "#ff9b7d", Danger: "#ff9b7d", DangerFg: "#10231b",
+	})
+
+	// GoldBand is the pizza band.
+	GoldBand = band(uitheme.Overrides{
+		Background: "#d8a332", Surface: "#e2b552", SurfaceSoft: "#cf9726",
+		Border: "#b8892a", BorderStrong: "#8f6a1f",
+		Text: "#173c2d", TextMuted: "#2a3b1f", TextSubtle: "#2f3f22",
+		Primary: "#173c2d", PrimaryFg: "#fff7e6",
+		Accent: "#173c2d", Danger: "#6e2412",
+	}, uitheme.Overrides{
+		Background: "#5a4219", Surface: "#674c1f", SurfaceSoft: "#735626",
+		Border: "#7d6430", BorderStrong: "#a2854a",
+		Text: "#fff7e4", TextMuted: "#f2e3bf", TextSubtle: "#e6d3a5",
+		Primary: "#f4d67f", PrimaryFg: "#2b1f08",
+		Accent: "#f4d67f", Danger: "#ffb39b", DangerFg: "#2b1f08",
+	})
+
+	// ForestBand is the menu band and the footer: forest green with
+	// cream ink and lime accents in both schemes.
+	ForestBand = band(uitheme.Overrides{
+		Background: "#173c2d", Surface: "#1d4636", SurfaceSoft: "#24503f",
+		Border: "#355a4a", BorderStrong: "#61776b",
+		Text: "#f8f3e8", TextMuted: "#d2dbd4", TextSubtle: "#b9c7be",
+		Primary: "#cae75d", PrimaryFg: "#173c2d",
+		Accent: "#cae75d", Danger: "#ff9b7d", DangerFg: "#173c2d",
+		Success: "#a8d886", Warning: "#f0c46a", Info: "#8cc8e6",
+	}, uitheme.Overrides{
+		Background: "#0c2a1f", Surface: "#10342a", SurfaceSoft: "#163d31",
+		Border: "#294a3d", BorderStrong: "#536a5f",
+		Text: "#f7f2e8", TextMuted: "#c8d2cb", TextSubtle: "#a9b8af",
+		Primary: "#d5ed74", PrimaryFg: "#0c2a1f",
+		Accent: "#d5ed74", Danger: "#ff9b7d", DangerFg: "#0c2a1f",
+		Success: "#a8d886", Warning: "#f0c46a", Info: "#8cc8e6",
+	})
+)
+
+// band builds a band theme: the Lotus palettes with the band's colours
+// laid over them.
+func band(light, dark uitheme.Overrides) style.Theme {
+	l, d := Light, Dark
+	mergeColours(&l, light)
+	mergeColours(&d, dark)
+	return build(l, d)
+}
+
+// mergeColours copies every non-empty colour of src over dst.
+func mergeColours(dst *uitheme.Overrides, src uitheme.Overrides) {
+	for _, f := range []struct {
+		d *string
+		s string
+	}{
+		{&dst.Background, src.Background}, {&dst.Surface, src.Surface}, {&dst.SurfaceSoft, src.SurfaceSoft},
+		{&dst.Border, src.Border}, {&dst.BorderStrong, src.BorderStrong},
+		{&dst.Text, src.Text}, {&dst.TextMuted, src.TextMuted}, {&dst.TextSubtle, src.TextSubtle},
+		{&dst.Primary, src.Primary}, {&dst.PrimaryFg, src.PrimaryFg}, {&dst.Accent, src.Accent},
+		{&dst.Success, src.Success}, {&dst.Warning, src.Warning}, {&dst.Danger, src.Danger},
+		{&dst.DangerFg, src.DangerFg}, {&dst.Info, src.Info},
+	} {
+		if f.s != "" {
+			*f.d = f.s
+		}
+	}
+}
+
+func build(light, dark uitheme.Overrides) style.Theme {
+	o := light
 	o.Dark = &dark
 	o.FontBody = FontStack
 	o.FontHeading = FontStack
@@ -77,11 +164,11 @@ func Lotus() style.Theme {
 	t := uitheme.Default(o)
 	t.Name = "lotus"
 
-	// Secondary buttons sit on the soft cream / deep-green fill.
-	t.Colors.Secondary.Value = "#ebe4d6"
-	t.Colors.SecondaryFg.Value = "#16372a"
-	t.DarkColors["secondary"] = "#1b3329"
-	t.DarkColors["secondary-fg"] = "#f7f2e8"
+	// Secondary buttons sit on the soft fill of their palette.
+	t.Colors.Secondary.Value = light.SurfaceSoft
+	t.Colors.SecondaryFg.Value = light.Text
+	t.DarkColors["secondary"] = dark.SurfaceSoft
+	t.DarkColors["secondary-fg"] = dark.Text
 
 	// Shadows tinted with the forest ink instead of neutral black.
 	t.Shadows.XS.Value = "0 1px 2px 0 rgba(13,43,32,0.06)"

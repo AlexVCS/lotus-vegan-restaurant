@@ -1,6 +1,10 @@
+// Command genmenu validates menu.json and writes internal/menu/data.gen.go,
+// the Go value the site renders the menu from. Run it with
+// `go generate ./...` after editing menu.json.
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"log"
 	"os"
@@ -20,24 +24,18 @@ func main() {
 		log.Fatal(err)
 	}
 
-	generated := menu.Render(m)
-	targets := []string{
-		filepath.Join(root, "public", "index.html"),
-		filepath.Join(root, "public", "menu", "index.html"),
+	src, err := menu.GoSource(m)
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	changed := false
-	for _, path := range targets {
-		didChange, err := menu.SpliceFile(path, generated)
-		if err != nil {
-			log.Fatal(err)
-		}
-		if didChange {
-			changed = true
-			fmt.Fprintf(os.Stderr, "updated %s\n", path)
-		}
+	target := filepath.Join(root, "internal", "menu", "data.gen.go")
+	if old, err := os.ReadFile(target); err == nil && bytes.Equal(old, src) {
+		fmt.Fprintln(os.Stderr, "menu data unchanged")
+		return
 	}
-	if !changed {
-		fmt.Fprintln(os.Stderr, "menu HTML unchanged")
+	if err := os.WriteFile(target, src, 0o644); err != nil {
+		log.Fatal(err)
 	}
+	fmt.Fprintf(os.Stderr, "updated %s\n", target)
 }

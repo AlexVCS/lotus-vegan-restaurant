@@ -1,0 +1,44 @@
+/* The Lotus menu: the parts the kit components do not draw. It always sits
+   on the forest band (internal/theme ForestBand), so the colours here are
+   that band's tokens. */
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+/* The jump strip scrolls sideways on narrow screens instead of wrapping
+   into a wall of buttons. */
+.jump {
+  overflow-x: auto;
+  padding-block: var(--spacing-sm);
+  scrollbar-width: thin;
+}
+
+/* The jump target sits inside the group's <details>; the margin keeps
+   the group's summary visible under the sticky header. */
+.items {
+  scroll-margin-top: calc(var(--size-header-height) + var(--spacing-3xl) + var(--spacing-lg));
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  padding-block: var(--spacing-md) var(--spacing-lg);
+}
+
+.note {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.price {
+  color: var(--color-accent);
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+}
+
+.legend {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
