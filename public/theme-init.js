@@ -12,6 +12,8 @@
   }
 
   root.dataset.theme = theme;
+  // GoFastr theme tokens (/theme.css) switch on data-color-scheme.
+  root.dataset.colorScheme = theme;
   root.style.colorScheme = theme;
   const isMenuPage = root.dataset.page === "menu";
   const themeColor = isMenuPage

@@ -21,6 +21,7 @@
   function applyTheme(theme) {
     const isDark = theme === "dark";
     document.documentElement.dataset.theme = theme;
+    document.documentElement.dataset.colorScheme = theme;
     document.documentElement.style.colorScheme = theme;
     themeToggle?.setAttribute("aria-pressed", String(isDark));
     themeToggle?.setAttribute("aria-label", `Switch to ${isDark ? "light" : "dark"} mode`);

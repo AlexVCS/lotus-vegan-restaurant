@@ -2,41 +2,42 @@
 @font-face { font-family: "DM Sans"; src: url("/assets/dm-sans-medium.ttf") format("truetype"); font-style: normal; font-weight: 500 600; font-display: swap; }
 
 :root {
-  --font: "DM Sans", sans-serif;
+  /* GoFastr theme tokens (served at /theme.css from internal/theme). */
+  --font: var(--font-body);
   --cream: #f8f3e8;
   --forest: #173c2d;
   --forest-deep: #0d2b20;
-  --dietary-ink: #0d2b20;
+  --dietary-ink: var(--color-dietary-ink);
   --dietary-outline: #07150f;
-  --dietary-gf: #cae75d;
-  --dietary-sf: #e97757;
-  --transition: 240ms ease;
+  --dietary-gf: var(--color-dietary-gf);
+  --dietary-sf: var(--color-dietary-sf);
+  --transition: var(--duration-normal) var(--easing-ease-out);
+  --page-bg: var(--color-background);
+  --surface-bg: var(--color-surface);
+  --text-primary: var(--color-text);
+  --text-muted: var(--color-text-muted);
+  --line: var(--color-border-strong);
+  --control-hover: var(--color-surface-soft);
+  --accent-lime: var(--color-brand-lime);
+  --accent-coral: var(--color-accent);
+  --accent-gold: var(--color-brand-gold);
+  --button-bg: var(--color-primary);
+  --button-text: var(--color-primary-fg);
+  --pickup-copy-text: var(--color-text);
+  --pickup-copy-muted: var(--color-text-muted);
+  --pickup-action-bg: var(--color-primary);
+  --pickup-action-text: var(--color-primary-fg);
+  --pickup-border: var(--color-border-strong);
 }
 
 html[data-theme="light"] {
-  --page-bg: #f5f0e5;
-  --surface-bg: #fbf7ee;
-  --text-primary: #16372a;
-  --text-muted: #4b6257;
-  --line: #a8b4ad;
   --header-bg: rgba(245, 240, 229, .95);
   --control-bg: #fffaf0;
-  --control-hover: #ebe4d6;
   --focus: #a6321b;
-  --accent-lime: #cae75d;
-  --accent-coral: #b94127;
-  --accent-gold: #d8a332;
-  --button-bg: #173c2d;
-  --button-text: #fffaf0;
   --button-hover: #0d2b20;
   --pickup-copy-bg: #fbf7ee;
-  --pickup-copy-text: #16372a;
-  --pickup-copy-muted: #4b6257;
-  --pickup-action-bg: #173c2d;
-  --pickup-action-text: #f8f3e8;
   --pickup-action-hover: #0d2b20;
   --pickup-accent: #b94127;
-  --pickup-border: #a8b4ad;
   --pickup-divider: rgba(248, 243, 232, .28);
   --pickup-shadow: rgba(13, 43, 32, .12);
   --facts-bg: #cae75d;
@@ -67,29 +68,13 @@ html[data-theme="light"] {
 }
 
 html[data-theme="dark"] {
-  --page-bg: #0a1711;
-  --surface-bg: #10231b;
-  --text-primary: #f7f2e8;
-  --text-muted: #c4cec7;
-  --line: #52685e;
   --header-bg: rgba(10, 23, 17, .95);
   --control-bg: #152b22;
-  --control-hover: #203b30;
   --focus: #d5ed74;
-  --accent-lime: #d5ed74;
-  --accent-coral: #ff9b7d;
-  --accent-gold: #e7ba51;
-  --button-bg: #d5ed74;
-  --button-text: #10231b;
   --button-hover: #e5f59b;
   --pickup-copy-bg: #173c2d;
-  --pickup-copy-text: #f8f3e8;
-  --pickup-copy-muted: #c4cec7;
-  --pickup-action-bg: #d5ed74;
-  --pickup-action-text: #173c2d;
   --pickup-action-hover: #e5f59b;
   --pickup-accent: #d5ed74;
-  --pickup-border: #52685e;
   --pickup-divider: rgba(23, 60, 45, .26);
   --pickup-shadow: rgba(7, 21, 15, .16);
   --facts-bg: #173327;
