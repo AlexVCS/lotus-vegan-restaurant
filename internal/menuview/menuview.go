@@ -49,7 +49,7 @@ func Legend() render.HTML {
 		))
 	}
 	items = append(items, ui.Link(ui.LinkConfig{Href: "#allergy-note", Text: "Allergy note ↓"}))
-	return Style.Scope(html.Div(html.DivConfig{Class: Style.Legend(), ExtraAttrs: html.Attrs{"role": "group", "aria-label": "Dietary labels"}},
+	return Style.Scope(html.Div(html.DivConfig{Class: Style.RootWith(RootVariants{Legend: true}), ExtraAttrs: html.Attrs{"role": "group", "aria-label": "Dietary labels"}},
 		ui.Cluster(ui.ClusterConfig{Gap: ui.GapLG}, items...)))
 }
 
@@ -95,11 +95,11 @@ func Render(cfg Config) render.HTML {
 		))
 	}
 
-	return Style.Scope(html.Div(html.DivConfig{Class: Style.Menu()},
+	return Style.Scope(html.Div(html.DivConfig{Class: Style.RootWith(RootVariants{Menu: true})},
 		html.Nav(html.NavConfig{Class: Style.Jump(), Label: "Menu categories"},
 			ui.Cluster(ui.ClusterConfig{Gap: ui.GapSM, NoWrap: true}, jump...)),
 		ui.Stack(ui.StackConfig{Gap: ui.GapSM}, groups...),
-		ui.Callout(ui.CalloutConfig{Title: m.AllergyNote.Label, Variant: ui.StatusWarning, ID: "allergy-note"},
+		ui.Callout(ui.CalloutConfig{Title: m.AllergyNote.Label, Variant: ui.StatusWarning, ID: "allergy-note", Class: Style.Allergy()},
 			render.Text(m.AllergyNote.Text)),
 	))
 }
