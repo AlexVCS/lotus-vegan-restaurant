@@ -76,7 +76,9 @@
 }
 
 /* The allergy note closes the menu: extra room above it so it reads as
-   its own block, not part of the last group. */
+   its own block, not part of the last group. The scroll margin keeps
+   the "Allergy note" link from landing it under the sticky header. */
 .allergy {
   margin-block-start: var(--spacing-md);
+  scroll-margin-top: calc(var(--size-header-height) + var(--spacing-lg));
 }
