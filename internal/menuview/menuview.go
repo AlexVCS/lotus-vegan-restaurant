@@ -1,11 +1,11 @@
 // Package menuview renders the Lotus menu (internal/menu) with GoFastr
 // components: a Collapsible per menu group (one open at a time), a Grid of
-// outlined Cards for the items (title, price, description, dietary
-// badges), StatusBadge + Tooltip for the dietary codes, a jump strip of
+// outlined Cards for the items (title, price, description, a list of
+// kinds, dietary badges), StatusBadge + Tooltip for the dietary codes, a jump strip of
 // LinkButtons, and a Callout for the allergy note.
 //
 // The few things the kit does not draw (the scrolling jump strip, the
-// price colour, the group number) live in menuview.style.css, an owned
+// price colour, the divided list of kinds) live in menuview.style.css, an owned
 // style whose every value is a theme token.
 package menuview
 
@@ -105,13 +105,24 @@ func Render(cfg Config) render.HTML {
 }
 
 // itemCard is one dish: the title and price in the card head, the
-// description under it, and the dietary badges in the body.
+// description under it, and in the body the kinds (one divided row
+// each: name, then ingredients) and the dietary badges.
 func itemCard(it menu.Item, level int) render.HTML {
 	var price render.HTML
 	if it.Price != "" {
 		price = html.Span(html.TextConfig{Class: Style.Price()}, render.Text(it.Price))
 	}
-	var badges render.HTML
+	body := []render.HTML{}
+	if len(it.Kinds) > 0 {
+		rows := make([]render.HTML, 0, len(it.Kinds))
+		for _, k := range it.Kinds {
+			rows = append(rows, html.ListItem(html.ListItemConfig{Class: Style.KindRow()},
+				html.Span(html.TextConfig{Class: Style.KindName()}, render.Text(k.Name)),
+				html.Span(html.TextConfig{Class: Style.KindIngredients()}, render.Text(k.Ingredients)),
+			))
+		}
+		body = append(body, html.UnorderedList(html.ListConfig{Class: Style.Kinds()}, rows...))
+	}
 	if len(it.Dietary) > 0 {
 		bs := make([]render.HTML, 0, len(it.Dietary))
 		for _, key := range it.Dietary {
@@ -122,7 +133,14 @@ func itemCard(it menu.Item, level int) render.HTML {
 					ExtraAttrs: html.Attrs{"tabindex": "0", "aria-label": d.Text},
 				})))
 		}
-		badges = ui.Cluster(ui.ClusterConfig{Gap: ui.GapSM}, bs...)
+		body = append(body, ui.Cluster(ui.ClusterConfig{Gap: ui.GapSM}, bs...))
+	}
+	var content render.HTML
+	switch len(body) {
+	case 1:
+		content = body[0]
+	case 2:
+		content = ui.Stack(ui.StackConfig{Gap: ui.GapLG}, body...)
 	}
 	return ui.Card(ui.CardConfig{
 		Heading:      it.Title,
@@ -130,5 +148,5 @@ func itemCard(it menu.Item, level int) render.HTML {
 		Description:  it.Description,
 		Action:       price,
 		Variant:      ui.CardOutlined,
-	}, badges)
+	}, content)
 }

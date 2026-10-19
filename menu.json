@@ -882,7 +882,16 @@
         {
           "title": "Cookies",
           "price": "$2.00",
-          "description": "Chocolate chip: flour, vanilla, butter, sugar, chocolate chips. Oatmeal: cranberry, oatmeal, butter, flour, sugar."
+          "kinds": [
+            {
+              "name": "Chocolate chip",
+              "ingredients": "Flour, vanilla, butter, sugar, chocolate chips"
+            },
+            {
+              "name": "Oatmeal",
+              "ingredients": "Cranberry, oatmeal, butter, flour, sugar"
+            }
+          ]
         },
         {
           "title": "Graham Cracker",

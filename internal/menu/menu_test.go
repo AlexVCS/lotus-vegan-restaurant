@@ -103,6 +103,50 @@ func TestValidate(t *testing.T) {
 	}
 }
 
+func TestValidateKinds(t *testing.T) {
+	withKinds := func(kinds ...Kind) *Menu {
+		return &Menu{
+			AllergyNote: AllergyNote{Label: "Allergy note", Text: "text"},
+			Groups: []Group{{
+				Slug: "desserts", Title: "Desserts", NavLabel: "Desserts",
+				Items: []Item{{Title: "Cookies", Price: "$2.00", Kinds: kinds}},
+			}},
+		}
+	}
+	if err := withKinds(Kind{Name: "Oatmeal", Ingredients: "Oats"}).Validate(); err != nil {
+		t.Fatalf("expected valid kinds: %v", err)
+	}
+	for _, k := range []Kind{{Name: "Oatmeal"}, {Ingredients: "Oats"}, {Name: " ", Ingredients: "Oats"}} {
+		if err := withKinds(Kind{Name: "Chocolate chip", Ingredients: "Chips"}, k).Validate(); err == nil {
+			t.Errorf("expected error for kind %+v", k)
+		}
+	}
+}
+
+// TestCookiesListKinds pins the cookies to their kinds: two rows, no
+// run-on description.
+func TestCookiesListKinds(t *testing.T) {
+	for _, g := range Data.Groups {
+		for _, it := range g.Items {
+			if it.Title != "Cookies" {
+				continue
+			}
+			if it.Description != "" {
+				t.Errorf("Cookies: description %q should be replaced by kinds", it.Description)
+			}
+			want := []Kind{
+				{Name: "Chocolate chip", Ingredients: "Flour, vanilla, butter, sugar, chocolate chips"},
+				{Name: "Oatmeal", Ingredients: "Cranberry, oatmeal, butter, flour, sugar"},
+			}
+			if !reflect.DeepEqual(it.Kinds, want) {
+				t.Errorf("Cookies kinds = %+v, want %+v", it.Kinds, want)
+			}
+			return
+		}
+	}
+	t.Fatal("no Cookies item in the menu")
+}
+
 func firstDivergence(a, b string) int {
 	min := len(a)
 	if len(b) < min {

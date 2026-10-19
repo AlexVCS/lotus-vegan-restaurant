@@ -54,7 +54,8 @@ func TestRoutes(t *testing.T) {
 }
 
 // TestEveryMenuItemRenders holds the menu pages to the menu data: every
-// item's title and price (with its $ prefix) is on both / and /menu.
+// item's title and price (with its $ prefix), and each kind's name and
+// ingredients, is on both / and /menu.
 func TestEveryMenuItemRenders(t *testing.T) {
 	srv := httptest.NewServer(buildApp().Router())
 	defer srv.Close()
@@ -72,6 +73,15 @@ func TestEveryMenuItemRenders(t *testing.T) {
 				}
 				if it.Price != "" && !strings.Contains(body, it.Price) {
 					t.Errorf("%s: price %q of %q missing", path, it.Price, it.Title)
+				}
+				if it.Description != "" && !strings.Contains(body, it.Description) {
+					t.Errorf("%s: description of %q missing", path, it.Title)
+				}
+				for _, k := range it.Kinds {
+					row := ">" + k.Name + "</span><span class=\"kind-ingredients\">" + k.Ingredients + "<"
+					if !strings.Contains(body, row) {
+						t.Errorf("%s: kind %q (%q) of %q missing", path, k.Name, k.Ingredients, it.Title)
+					}
 				}
 			}
 		}

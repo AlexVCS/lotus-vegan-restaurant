@@ -60,12 +60,22 @@ type Group struct {
 	Items    []Item `json:"items"`
 }
 
+// Item is one dish. It may carry a description, kinds, or both.
 type Item struct {
-	Title         string   `json:"title"`
-	Price         string   `json:"price,omitempty"`
-	Description   string   `json:"description,omitempty"`
+	Title       string `json:"title"`
+	Price       string `json:"price,omitempty"`
+	Description string `json:"description,omitempty"`
+	// Kinds lists the varieties of a dish sold under one title and price
+	// (the cookies: chocolate chip, oatmeal), each with its ingredients.
+	Kinds         []Kind   `json:"kinds,omitempty"`
 	Dietary       []string `json:"dietary,omitempty"`
 	CopyPreserved bool     `json:"copyPreserved,omitempty"`
+}
+
+// Kind is one variety of an Item.
+type Kind struct {
+	Name        string `json:"name"`
+	Ingredients string `json:"ingredients"`
 }
 
 func Load(path string) (*Menu, error) {
@@ -110,6 +120,11 @@ func (m *Menu) Validate() error {
 		for _, item := range g.Items {
 			if strings.TrimSpace(item.Title) == "" {
 				return fmt.Errorf("group %q: item title is required", g.Slug)
+			}
+			for _, k := range item.Kinds {
+				if strings.TrimSpace(k.Name) == "" || strings.TrimSpace(k.Ingredients) == "" {
+					return fmt.Errorf("group %q item %q: each kind needs a name and ingredients", g.Slug, item.Title)
+				}
 			}
 			for _, d := range item.Dietary {
 				if !validDietary[d] {
@@ -165,6 +180,13 @@ func GoSource(m *Menu) ([]byte, error) {
 			}
 			if it.Description != "" {
 				fmt.Fprintf(&b, ", Description: %s", q(it.Description))
+			}
+			if len(it.Kinds) > 0 {
+				b.WriteString(", Kinds: []Kind{\n")
+				for _, k := range it.Kinds {
+					fmt.Fprintf(&b, "{Name: %s, Ingredients: %s},\n", q(k.Name), q(k.Ingredients))
+				}
+				b.WriteString("}")
 			}
 			if len(it.Dietary) > 0 {
 				codes := make([]string, len(it.Dietary))

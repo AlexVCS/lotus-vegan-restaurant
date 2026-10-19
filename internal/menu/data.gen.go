@@ -252,7 +252,10 @@ var Data = &Menu{
 				{Title: "Carrot Cake", Price: "$5.50", Description: "Flour, carrot, walnut, cinnamon, canola oil, sugar, baking soda, baking powder, orange."},
 				{Title: "Chocolate Cake", Price: "$5.50", Description: "Canola oil, soymilk, sugar, egg replacement, vanilla, salt, cream cheese, flour, cacao powder."},
 				{Title: "Vanilla Cake", Price: "$4.99", Description: "Vanilla, soymilk, sugar, egg replacement, gluten."},
-				{Title: "Cookies", Price: "$2.00", Description: "Chocolate chip: flour, vanilla, butter, sugar, chocolate chips. Oatmeal: cranberry, oatmeal, butter, flour, sugar."},
+				{Title: "Cookies", Price: "$2.00", Kinds: []Kind{
+					{Name: "Chocolate chip", Ingredients: "Flour, vanilla, butter, sugar, chocolate chips"},
+					{Name: "Oatmeal", Ingredients: "Cranberry, oatmeal, butter, flour, sugar"},
+				}},
 				{Title: "Graham Cracker", Price: "$5.49", Description: "Chocolate, vegan whipped cream (coconut milk, powdered sugar, shortening), graham cracker crumbs."},
 				{Title: "Caramel Flan", Price: "$ 4.99", Description: "Flour, soy milk, coffee, almond milk, sugar."},
 				{Title: "Banana Cake", Price: "$ 4.50", Description: "Banana, coconut milk, tapioca starch, sugar, shredded coconut."},

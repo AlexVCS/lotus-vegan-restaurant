@@ -32,6 +32,38 @@
   font-size: var(--text-sm);
 }
 
+/* An item sold in several kinds (the cookies): one row per kind, the
+   name over its ingredients, a hairline above each row. The first
+   hairline sets the list off from the card head; the last row has no
+   padding under it, so the card ends where the text does. */
+.kinds {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+.kind-row {
+  padding-block: var(--spacing-md);
+  border-top: var(--stroke-thin) solid var(--color-border);
+}
+
+.kind-row:last-child {
+  padding-block-end: 0;
+}
+
+.kind-name {
+  display: block;
+  color: var(--color-text);
+  font-weight: var(--font-weight-semibold);
+}
+
+.kind-ingredients {
+  display: block;
+  color: var(--color-text-muted);
+}
+
 .price {
   color: var(--color-accent);
   font-weight: var(--font-weight-semibold);
