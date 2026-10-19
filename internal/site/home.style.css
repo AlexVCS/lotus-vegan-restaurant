@@ -71,6 +71,44 @@
   font-size: var(--text-lg);
 }
 
+/* The visit facts (Address, Hours, Call). Each column is a subgrid over
+   three shared rows (heading, value, footer), so the footer dividers sit
+   on one line across the columns even when one footer runs taller. */
+.visit-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
+  gap: var(--spacing-lg);
+}
+
+.visit-fact {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 3;
+  row-gap: 0;
+}
+
+.visit-heading {
+  margin: 0;
+  padding: var(--spacing-xl) var(--spacing-xl) 0;
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--tracking-snug);
+  line-height: var(--leading-tight);
+  color: var(--color-text);
+}
+
+.visit-body {
+  padding: var(--spacing-lg) var(--spacing-xl) var(--spacing-xl);
+}
+
+.visit-foot {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg) var(--spacing-xl);
+  border-top: var(--stroke-thin) solid var(--color-border);
+}
+
 .visit-value {
   margin: 0;
   font-size: var(--text-xl);

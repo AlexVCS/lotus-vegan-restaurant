@@ -160,6 +160,22 @@ func pizzaSize(size, price string) render.HTML {
 	)
 }
 
+// visitFact is one column of the visit facts: a heading, the value, and
+// an optional footer under a divider. The columns share their rows (see
+// .visit-fact), so the dividers sit on one line even when one footer
+// runs taller than another. ui.Card can't do that: it pins its footer
+// to the card's bottom, which pushes a shorter footer down a shared row.
+func visitFact(heading string, value, footer render.HTML) render.HTML {
+	parts := []render.HTML{
+		html.Heading(html.HeadingConfig{Level: 3, Class: HomeStyle.VisitHeading()}, render.Text(heading)),
+		html.Div(html.DivConfig{Class: HomeStyle.VisitBody()}, value),
+	}
+	if footer != "" {
+		parts = append(parts, html.Div(html.DivConfig{Class: HomeStyle.VisitFoot()}, footer))
+	}
+	return html.Div(html.DivConfig{Class: HomeStyle.VisitFact()}, parts...)
+}
+
 func visit() render.HTML {
 	callLinks := make([]render.HTML, 0, len(phones))
 	for _, p := range phones {
@@ -173,22 +189,20 @@ func visit() render.HTML {
 		Eyebrow: "Come sit with us",
 		Heading: "Your table is waiting.",
 	},
-		ui.Grid(ui.GridConfig{Min: "16rem", Gap: ui.GapLG},
-			ui.Card(ui.CardConfig{
-				Heading: "Address", HeadingLevel: 3, Variant: ui.CardFlat,
-				Footer: ui.LinkButton(ui.LinkButtonConfig{
+		html.Div(html.DivConfig{Class: HomeStyle.VisitFacts()},
+			visitFact("Address",
+				html.Paragraph(html.TextConfig{Class: HomeStyle.VisitValue()}, render.Text("6575 Park Blvd N"), html.BR(), render.Text("Pinellas Park, FL 33781")),
+				ui.LinkButton(ui.LinkButtonConfig{
 					Label: "Get directions", Href: directionsURL, Icon: "map-pin", External: true, Variant: ui.ButtonPrimary, Size: ui.ButtonSizeSmall,
 				}),
-			},
-				html.Paragraph(html.TextConfig{Class: HomeStyle.VisitValue()}, render.Text("6575 Park Blvd N"), html.BR(), render.Text("Pinellas Park, FL 33781")),
 			),
-			ui.Card(ui.CardConfig{Heading: "Hours", HeadingLevel: 3, Variant: ui.CardFlat,
-				Footer: ui.Muted(render.Text("Last dine-in at 8:15pm · Second Sunday buffet 12pm–7pm")),
-			},
+			visitFact("Hours",
 				html.Paragraph(html.TextConfig{Class: HomeStyle.VisitValue()}, render.Text("Monday–Saturday"), html.BR(), render.Text("11:00am–9:00pm")),
+				ui.Muted(render.Text("Last dine-in at 8:15pm · Second Sunday buffet 12pm–7pm")),
 			),
-			ui.Card(ui.CardConfig{Heading: "Call", HeadingLevel: 3, Variant: ui.CardFlat},
+			visitFact("Call",
 				ui.Stack(ui.StackConfig{Gap: ui.GapSM, Align: ui.AlignStart}, callLinks...),
+				"",
 			),
 		),
 	)
