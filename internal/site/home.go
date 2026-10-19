@@ -135,15 +135,28 @@ func story() render.HTML {
 
 func pizza() render.HTML {
 	return ui.Section(ui.SectionConfig{
+		Class:       HomeStyle.PizzaSection(),
 		Eyebrow:     "Now from the oven",
 		Heading:     "Vegan pizza, the Lotus way.",
 		Description: "Housemade dough, marinara, vegan cheese, bell peppers, vegan pepperoni, mushrooms, and onion. Served with a side salad.",
 	},
-		ui.Grid(ui.GridConfig{Min: "12rem", Gap: ui.GapLG, ExtraAttrs: html.Attrs{"role": "group", "aria-label": "Pizza prices"}},
-			ui.FactBox(ui.FactBoxConfig{Label: "9 inch", Value: "$18", Style: ui.FactStyleValueFirst}),
-			ui.FactBox(ui.FactBoxConfig{Label: "16 inch", Value: "$26", Style: ui.FactStyleValueFirst}),
-			ui.FactBox(ui.FactBoxConfig{Label: "Extra toppings", Value: "+$2", Style: ui.FactStyleValueFirst}),
+		html.Div(html.DivConfig{Class: HomeStyle.PizzaPrices(), ExtraAttrs: html.Attrs{"role": "group", "aria-label": "Pizza prices"}},
+			html.Div(html.DivConfig{Class: HomeStyle.PizzaSizes()},
+				pizzaSize("9 inch", "$18"),
+				pizzaSize("16 inch", "$26"),
+			),
+			html.Paragraph(html.TextConfig{Class: HomeStyle.PizzaExtra()},
+				render.Text("Extra toppings "), html.Strong(html.TextConfig{}, render.Text("+$2"))),
 		),
+	)
+}
+
+// pizzaSize is one size tile in the pizza band: the size on top, the
+// price under it.
+func pizzaSize(size, price string) render.HTML {
+	return html.Div(html.DivConfig{Class: HomeStyle.PizzaSize()},
+		html.Span(html.TextConfig{Class: HomeStyle.PizzaSizeLabel()}, render.Text(size)),
+		html.Span(html.TextConfig{Class: HomeStyle.PizzaSizePrice()}, render.Text(price)),
 	)
 }
 

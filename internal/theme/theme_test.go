@@ -84,6 +84,18 @@ func TestDietaryBadgesReadOnTheMenuBand(t *testing.T) {
 	}
 }
 
+// TestPizzaTilesRead checks the pizza band's size tiles (home.style.css
+// .pizza-size): in light mode a 38% primary-fg (cream) wash over the
+// gold, carrying the band's text. In dark mode they sit on the band's
+// surface, which TestTextContrast already covers.
+func TestPizzaTilesRead(t *testing.T) {
+	th := GoldBand
+	tile := mix(t, th.Colors.PrimaryFg.Value, th.Colors.Background.Value, 0.38)
+	if r := contrast(t, th.Colors.Text.Value, tile); r < 4.5 {
+		t.Errorf("gold band light: text on the pizza tile %s is %.2f:1, want >= 4.5", tile, r)
+	}
+}
+
 // pick reads a brand token for a scheme: the dark map in dark mode,
 // the generated light value otherwise.
 func pick(scheme, key string, dark map[string]string) string {

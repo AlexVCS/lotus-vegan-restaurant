@@ -76,3 +76,56 @@
   font-size: var(--text-xl);
   line-height: var(--leading-snug);
 }
+
+/* The pizza band's prices: the two sizes as side-by-side tiles (two
+   columns even on phones), extra toppings as one quieter line under
+   them. The row is capped so the tiles stay tile-sized on desktop. */
+/* On phones the pizza band drops the section's own outer margins, so
+   the band is the container's padding plus a nudge to even out the top:
+   48px above and below. */
+@media (--below-sm) {
+  .pizza-section {
+    margin-block: var(--spacing-md) 0;
+  }
+}
+
+.pizza-prices {
+  display: grid;
+  gap: calc(var(--spacing-md) + var(--spacing-sm));
+  max-inline-size: 30rem;
+}
+.pizza-sizes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: calc(var(--spacing-md) + var(--spacing-sm));
+}
+.pizza-size {
+  display: grid;
+  gap: var(--spacing-xs);
+  padding: calc(var(--spacing-md) + var(--spacing-sm)) var(--spacing-lg);
+  border: var(--stroke-thin) solid color-mix(in srgb, var(--color-text) 18%, transparent);
+  border-radius: var(--radii-lg);
+  background: color-mix(in srgb, var(--color-primary-fg) 38%, transparent);
+}
+.pizza-size-label {
+  font-size: var(--text-sm);
+}
+.pizza-size-price {
+  font-size: var(--text-3xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--leading-tight);
+}
+.pizza-extra {
+  margin: 0;
+}
+.pizza-extra strong {
+  font-weight: var(--font-weight-semibold);
+}
+
+/* The gold band's dark primary-fg is a dark ink, so the tiles lift
+   onto the band's surface instead. */
+@media (--dark) {
+  .pizza-size {
+    background: var(--color-surface);
+  }
+}
