@@ -99,8 +99,11 @@ func Render(cfg Config) render.HTML {
 		html.Nav(html.NavConfig{Class: Style.Jump(), Label: "Menu categories"},
 			ui.Cluster(ui.ClusterConfig{Gap: ui.GapSM, NoWrap: true}, jump...)),
 		ui.Stack(ui.StackConfig{Gap: ui.GapSM}, groups...),
-		ui.Callout(ui.CalloutConfig{Title: m.AllergyNote.Label, Variant: ui.StatusWarning, ID: "allergy-note", Class: Style.Allergy()},
-			render.Text(m.AllergyNote.Text)),
+		// The anchor and its spacing live on a wrapper we own: an owned
+		// style may only place a kit root, and scroll-margin restyles it.
+		html.Div(html.DivConfig{ID: "allergy-note", Class: Style.Allergy()},
+			ui.Callout(ui.CalloutConfig{Title: m.AllergyNote.Label, Variant: ui.StatusWarning},
+				render.Text(m.AllergyNote.Text))),
 	))
 }
 
