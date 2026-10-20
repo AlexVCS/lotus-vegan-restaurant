@@ -1,5 +1,5 @@
 // Package menuview renders the Lotus menu (internal/menu) with GoFastr
-// components: a Collapsible per menu group (one open at a time), a Grid of
+// components: a Collapsible per menu group (any number open), a Grid of
 // outlined Cards for the items (title, price, description, a list of
 // kinds, dietary badges), StatusBadge + Tooltip for the dietary codes, a jump strip of
 // LinkButtons, and a Callout for the allergy note.
@@ -84,9 +84,8 @@ func Render(cfg Config) render.HTML {
 			Summary: fmt.Sprintf("%02d · %s", gi+1, g.Title),
 			Open:    gi == 0,
 			ID:      GroupID(g.Slug),
-			// One group open at a time, the way the original menu worked:
-			// the browser closes the others (exclusive <details>).
-			Name: "lotus-menu",
+			// No Name: groups open independently, so several can be
+			// open at once.
 		},
 			// The jump strip targets this wrapper: following a link into
 			// a closed <details> opens it, so the strip works without
