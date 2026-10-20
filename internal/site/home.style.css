@@ -59,6 +59,59 @@
   font-size: var(--text-sm);
 }
 
+/* The quick-facts strip under the hero: a thin band of three ruled
+   columns, each fact in strong type over its detail line. The band
+   drops the container's page padding; the columns' own height and
+   inset make the band. Narrower screens stack them as ruled rows. */
+.facts-band {
+  --ui-container-pad-start: 0;
+  --ui-container-pad-end: 0;
+}
+
+.quick-facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.quick-fact {
+  display: grid;
+  align-items: center;
+  min-block-size: calc(var(--spacing-3xl) * 3);
+  padding: var(--spacing-2xl);
+  border-inline-start: var(--stroke-thin) solid color-mix(in srgb, var(--color-text) 38%, transparent);
+}
+.quick-fact:last-child {
+  border-inline-end: var(--stroke-thin) solid color-mix(in srgb, var(--color-text) 38%, transparent);
+}
+
+.quick-fact p {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+}
+.quick-fact strong {
+  display: block;
+  margin-block-end: var(--spacing-xs);
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--leading-snug);
+}
+
+@media (--below-lg) {
+  .quick-facts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .quick-fact {
+    min-block-size: calc(var(--spacing-3xl) * 2.5);
+    padding: var(--spacing-xl) 0;
+    border-inline: 0;
+    border-block-end: var(--stroke-thin) solid color-mix(in srgb, var(--color-text) 38%, transparent);
+  }
+  .quick-fact:last-child {
+    border-inline-end: 0;
+  }
+}
+
 .lead {
   margin: 0;
   max-inline-size: 62ch;

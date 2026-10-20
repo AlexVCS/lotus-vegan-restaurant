@@ -17,7 +17,7 @@ type HomeScreen struct{}
 func (s *HomeScreen) Render() render.HTML {
 	return ui.Stack(ui.StackConfig{Gap: ui.GapNone},
 		ui.Container(ui.ContainerConfig{Width: ui.ContainerPage, Pad: ui.ContainerPadPage}, hero()),
-		ui.Themed(limeBand, ui.Container(ui.ContainerConfig{Width: ui.ContainerPage, Pad: ui.ContainerPadPage}, quickFacts())),
+		ui.Themed(limeBand, ui.Container(ui.ContainerConfig{Width: ui.ContainerPage, Pad: ui.ContainerPadPage, Class: HomeStyle.FactsBand()}, quickFacts())),
 		ui.Container(ui.ContainerConfig{Width: ui.ContainerPage, Pad: ui.ContainerPadPage}, story()),
 		ui.Themed(goldBand, ui.Container(ui.ContainerConfig{Width: ui.ContainerPage, Pad: ui.ContainerPadPage}, pizza())),
 		ui.Themed(forestBand, ui.Container(ui.ContainerConfig{Width: ui.ContainerPage, Pad: ui.ContainerPadPage},
@@ -81,11 +81,21 @@ func hero() render.HTML {
 	})
 }
 
+// quickFact is one column of the strip under the hero: the fact in
+// strong type over its detail line.
+func quickFact(label, value string) render.HTML {
+	return html.Div(html.DivConfig{Class: HomeStyle.QuickFact()},
+		html.Paragraph(html.TextConfig{},
+			html.Strong(html.TextConfig{}, render.Text(label)),
+			render.Text(value)),
+	)
+}
+
 func quickFacts() render.HTML {
-	return ui.Grid(ui.GridConfig{Min: "15rem", Gap: ui.GapLG, ExtraAttrs: html.Attrs{"role": "group", "aria-label": "Restaurant details"}},
-		ui.FactBox(ui.FactBoxConfig{Label: "Open Mon–Sat", Value: "11am–9pm · last dine-in 8:15pm"}),
-		ui.FactBox(ui.FactBoxConfig{Label: "Second Sunday buffet", Value: "12pm–7pm · all other Sundays closed"}),
-		ui.FactBox(ui.FactBoxConfig{Label: "Pinellas Park", Value: "6575 Park Blvd N, Florida 33781"}),
+	return html.Div(html.DivConfig{Class: HomeStyle.QuickFacts(), ExtraAttrs: html.Attrs{"role": "group", "aria-label": "Restaurant details"}},
+		quickFact("Open Mon–Sat", "11am–9pm · last dine-in 8:15pm"),
+		quickFact("Second Sunday buffet", "12pm–7pm · all other Sundays closed"),
+		quickFact("Pinellas Park", "6575 Park Blvd N, Florida 33781"),
 	)
 }
 
@@ -186,7 +196,7 @@ func visit() render.HTML {
 	}
 	return ui.Section(ui.SectionConfig{
 		ID:      "visit",
-		Eyebrow: "Come sit with us",
+		Eyebrow: "Come eat with us",
 		Heading: "Your table is waiting.",
 	},
 		html.Div(html.DivConfig{Class: HomeStyle.VisitFacts()},
