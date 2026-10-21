@@ -35,7 +35,7 @@ func TestRoutes(t *testing.T) {
 	for path, want := range map[string]string{
 		"/":                             "Food with peace at heart.",
 		"/menu":                         "Find your favorite.",
-		"/contact":                      "A note for the Lotus team.",
+		"/contact":                      "Talk to the Lotus team.",
 		"/assets/avocado-salad.jpg":     "",
 		"/assets/dm-sans-regular.woff2": "",
 		"/favicon.ico":                  "",
@@ -91,31 +91,41 @@ func TestEveryMenuItemRenders(t *testing.T) {
 	}
 }
 
-func TestContactForm(t *testing.T) {
+// TestContactPage holds the contact page to what it can deliver: there is
+// no online form (nothing would receive the message), so the page offers
+// the pickup phones and the old form endpoint no longer answers a POST
+// with a success redirect.
+func TestContactPage(t *testing.T) {
 	srv := httptest.NewServer(buildApp().Router())
 	defer srv.Close()
-	client := &http.Client{CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}
 
-	for name, tc := range map[string]struct {
-		form url.Values
-		want string
-	}{
-		"valid":     {url.Values{"first_name": {"Ada"}, "last_name": {"L"}, "email": {"ada@example.com"}, "message": {"Hi"}}, "/contact?sent=1"},
-		"missing":   {url.Values{"first_name": {"Ada"}, "email": {"ada@example.com"}, "message": {"Hi"}}, "/contact?error=1"},
-		"bad email": {url.Values{"first_name": {"Ada"}, "last_name": {"L"}, "email": {"nope"}, "message": {"Hi"}}, "/contact?error=1"},
+	code, body := get(t, srv, "/contact")
+	if code != http.StatusOK {
+		t.Fatalf("GET /contact = %d, want 200", code)
+	}
+	body = html.UnescapeString(body)
+	for _, want := range []string{
+		`href="tel:+17275491688"`,
+		`href="tel:+17275440103"`,
+		"We can’t take messages online just yet.",
 	} {
-		res, err := client.PostForm(srv.URL+"/contact/send", tc.form)
-		if err != nil {
-			t.Fatal(err)
+		if !strings.Contains(body, want) {
+			t.Errorf("/contact: body missing %q", want)
 		}
-		res.Body.Close()
-		if res.StatusCode != http.StatusSeeOther || !strings.HasPrefix(res.Header.Get("Location"), tc.want) {
-			t.Errorf("%s: %d %q, want 303 %s", name, res.StatusCode, res.Header.Get("Location"), tc.want)
+	}
+	for _, unwanted := range []string{"<form", "/contact/send", "Message sent"} {
+		if strings.Contains(body, unwanted) {
+			t.Errorf("/contact: body still has %q", unwanted)
 		}
 	}
 
-	_, body := get(t, srv, "/contact?sent=1")
-	if !strings.Contains(html.UnescapeString(body), "ready to connect to the Lotus inbox") {
-		t.Error("/contact?sent=1 does not show the thank-you message")
+	client := &http.Client{CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}
+	res, err := client.PostForm(srv.URL+"/contact/send", url.Values{"first_name": {"Ada"}, "last_name": {"L"}, "email": {"ada@example.com"}, "message": {"Hi"}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	res.Body.Close()
+	if res.StatusCode < 400 {
+		t.Errorf("POST /contact/send = %d, want an error status", res.StatusCode)
 	}
 }

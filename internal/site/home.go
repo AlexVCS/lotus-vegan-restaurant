@@ -188,14 +188,20 @@ func visitFact(heading string, value, footer render.HTML) render.HTML {
 	return html.Div(html.DivConfig{Class: HomeStyle.VisitFact()}, parts...)
 }
 
-func visit() render.HTML {
-	callLinks := make([]render.HTML, 0, len(phones))
+// callLinks are the pickup lines as a stack of call buttons, one per
+// phone. The visit facts and the contact card share them.
+func callLinks() render.HTML {
+	links := make([]render.HTML, 0, len(phones))
 	for _, p := range phones {
-		callLinks = append(callLinks, ui.LinkButton(ui.LinkButtonConfig{
+		links = append(links, ui.LinkButton(ui.LinkButtonConfig{
 			Label: p.Display, Href: p.Tel, Icon: "phone", Variant: ui.ButtonSecondary,
 			ExtraAttrs: html.Attrs{"aria-label": "Call " + p.Display},
 		}))
 	}
+	return ui.Stack(ui.StackConfig{Gap: ui.GapSM, Align: ui.AlignStart}, links...)
+}
+
+func visit() render.HTML {
 	return ui.Section(ui.SectionConfig{
 		ID:      "visit",
 		Eyebrow: "Come eat with us",
@@ -212,10 +218,7 @@ func visit() render.HTML {
 				html.Paragraph(html.TextConfig{Class: HomeStyle.VisitValue()}, render.Text("Monday–Saturday"), html.BR(), render.Text("11:00am–9:00pm")),
 				ui.Muted(render.Text("Last dine-in at 8:15pm · Second Sunday buffet 12pm–7pm")),
 			),
-			visitFact("Call",
-				ui.Stack(ui.StackConfig{Gap: ui.GapSM, Align: ui.AlignStart}, callLinks...),
-				"",
-			),
+			visitFact("Call", callLinks(), ""),
 		),
 	)
 }

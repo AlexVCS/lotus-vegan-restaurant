@@ -24,11 +24,11 @@ go run .
 
 Open <http://localhost:8080>.
 
-The standalone menu is available at <http://localhost:8080/menu> and the contact form at <http://localhost:8080/contact>.
+The standalone menu is available at <http://localhost:8080/menu> and the contact page at <http://localhost:8080/contact>.
 
 ## How it's built
 
-- Pages are GoFastr screens rendered by the UI host (`internal/site`), composed from `framework/ui` components: `Hero`, `Section`, `Card`/`Grid`, `FactBox`, `LinkButton`, `Collapsible`, `StatusBadge`, `Callout`, `Form`, `ThemeToggle` and `BackToTop`.
+- Pages are GoFastr screens rendered by the UI host (`internal/site`), composed from `framework/ui` components: `Hero`, `Section`, `Card`/`Grid`, `FactBox`, `LinkButton`, `Collapsible`, `StatusBadge`, `Callout`, `ThemeToggle` and `BackToTop`.
 - The header and footer are owned packages (`internal/siteheader`, `internal/sitefooter`) generated with `gofastr generate package` and extended for Lotus.
 - The Lotus brand is a GoFastr theme (`internal/theme`): light and dark palettes, DM Sans, the lime/gold/forest page bands, and brand tokens in `brand.tokens.css`. Dark mode uses GoFastr's `data-color-scheme` attribute and the `gofastr.colorScheme` saved preference.
 - Owned style sheets (`*.style.css`) cover the few things the kit doesn't draw. After editing one, or a `*.tokens.css`, run `gofastr gen styles`.

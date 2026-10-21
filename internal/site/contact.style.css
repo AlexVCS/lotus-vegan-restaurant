@@ -1,11 +1,8 @@
 /* The contact page: the frame clips the forest band's backdrop to the
-   form card's rounded corners. */
+   contact card's rounded corners. */
 .frame {
   align-self: start;
   overflow: hidden;
   border-radius: var(--radii-lg);
   box-shadow: var(--shadow-lg);
-  /* The form's handler redirects to #contact-card; keep the card's top,
-     where the outcome shows, clear of the sticky header. */
-  scroll-margin-top: calc(var(--size-header-height) + var(--spacing-lg));
 }

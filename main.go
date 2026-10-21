@@ -46,7 +46,6 @@ func buildApp() *framework.App {
 	app := framework.NewApp(
 		framework.WithConfig(framework.AppConfig{Name: "lotus-vegan"}),
 	)
-	site.MountRoutes(app.Router())
 	// The UI host answers /favicon.ico with 204 unless it generates the
 	// icons itself (WithAppIcon); the site ships its own multi-size .ico,
 	// so it gets an explicit route.
