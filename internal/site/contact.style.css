@@ -1,0 +1,8 @@
+/* The contact page: the frame clips the forest band's backdrop to the
+   contact card's rounded corners. */
+.frame {
+  align-self: start;
+  overflow: hidden;
+  border-radius: var(--radii-lg);
+  box-shadow: var(--shadow-lg);
+}

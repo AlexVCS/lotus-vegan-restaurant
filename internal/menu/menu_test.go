@@ -3,7 +3,7 @@ package menu
 import (
 	"os"
 	"path/filepath"
-	"strconv"
+	"reflect"
 	"strings"
 	"testing"
 )
@@ -18,25 +18,53 @@ func TestGeneratedMenuIsFresh(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	rendered := Render(m)
-
-	targets := []string{
-		filepath.Join(root, "public", "index.html"),
-		filepath.Join(root, "public", "menu", "index.html"),
+	want, err := GoSource(m)
+	if err != nil {
+		t.Fatal(err)
 	}
-	for _, path := range targets {
-		data, err := os.ReadFile(path)
-		if err != nil {
-			t.Fatal(err)
+
+	path := filepath.Join(root, "internal", "menu", "data.gen.go")
+	got, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if string(got) != string(want) {
+		off := firstDivergence(string(got), string(want))
+		t.Fatalf("%s: stale — run `go generate ./...` (first divergence at offset %d)", path, off)
+	}
+}
+
+// TestDataMatchesJSON checks the compiled-in menu is the one menu.json
+// describes, item for item, prices and dietary codes included.
+func TestDataMatchesJSON(t *testing.T) {
+	root, err := RepoRoot()
+	if err != nil {
+		t.Fatal(err)
+	}
+	m, err := Load(filepath.Join(root, "menu.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := Data.Validate(); err != nil {
+		t.Fatal(err)
+	}
+	if !reflect.DeepEqual(m, Data) {
+		t.Fatal("menu.Data differs from menu.json — run `go generate ./...`")
+	}
+	priced := 0
+	for _, g := range Data.Groups {
+		for _, it := range g.Items {
+			if it.Price == "" {
+				continue
+			}
+			priced++
+			if !strings.Contains(it.Price, "$") {
+				t.Errorf("%s / %s: price %q has no $ prefix", g.Slug, it.Title, it.Price)
+			}
 		}
-		extracted, err := ExtractBetweenMarkers(string(data))
-		if err != nil {
-			t.Fatalf("%s: %v", path, err)
-		}
-		if extracted != rendered {
-			off := firstDivergence(extracted, rendered)
-			t.Fatalf("%s: stale — run `go generate ./...` (first divergence at offset %d)", path, off)
-		}
+	}
+	if priced == 0 {
+		t.Fatal("no priced items in the menu")
 	}
 }
 
@@ -75,42 +103,48 @@ func TestValidate(t *testing.T) {
 	}
 }
 
-func TestTooltipNumbering(t *testing.T) {
-	root, err := RepoRoot()
-	if err != nil {
-		t.Fatal(err)
-	}
-	m, err := Load(filepath.Join(root, "menu.json"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	rendered := Render(m)
-
-	total := 0
-	for _, g := range m.Groups {
-		for _, item := range g.Items {
-			total += len(item.Dietary)
+func TestValidateKinds(t *testing.T) {
+	withKinds := func(kinds ...Kind) *Menu {
+		return &Menu{
+			AllergyNote: AllergyNote{Label: "Allergy note", Text: "text"},
+			Groups: []Group{{
+				Slug: "desserts", Title: "Desserts", NavLabel: "Desserts",
+				Items: []Item{{Title: "Cookies", Price: "$2.00", Kinds: kinds}},
+			}},
 		}
 	}
-
-	for n := 1; n <= total; n++ {
-		s := strconv.Itoa(n)
-		id := "id=\"dietary-tooltip-" + s + "\""
-		aria := "aria-describedby=\"dietary-tooltip-" + s + "\""
-		idCount := strings.Count(rendered, id)
-		ariaCount := strings.Count(rendered, aria)
-		if idCount != 1 {
-			t.Fatalf("dietary-tooltip-%d: expected id= once, got %d", n, idCount)
-		}
-		if ariaCount != 1 {
-			t.Fatalf("dietary-tooltip-%d: expected aria-describedby= once, got %d", n, ariaCount)
+	if err := withKinds(Kind{Name: "Oatmeal", Ingredients: "Oats"}).Validate(); err != nil {
+		t.Fatalf("expected valid kinds: %v", err)
+	}
+	for _, k := range []Kind{{Name: "Oatmeal"}, {Ingredients: "Oats"}, {Name: " ", Ingredients: "Oats"}} {
+		if err := withKinds(Kind{Name: "Chocolate chip", Ingredients: "Chips"}, k).Validate(); err == nil {
+			t.Errorf("expected error for kind %+v", k)
 		}
 	}
+}
 
-	next := "id=\"dietary-tooltip-" + strconv.Itoa(total+1) + "\""
-	if strings.Count(rendered, next) != 0 {
-		t.Fatalf("dietary-tooltip-%d: unexpected id beyond derived total %d", total+1, total)
+// TestCookiesListKinds pins the cookies to their kinds: two rows, no
+// run-on description.
+func TestCookiesListKinds(t *testing.T) {
+	for _, g := range Data.Groups {
+		for _, it := range g.Items {
+			if it.Title != "Cookies" {
+				continue
+			}
+			if it.Description != "" {
+				t.Errorf("Cookies: description %q should be replaced by kinds", it.Description)
+			}
+			want := []Kind{
+				{Name: "Chocolate chip", Ingredients: "Flour, vanilla, butter, sugar, chocolate chips"},
+				{Name: "Oatmeal", Ingredients: "Cranberry, oatmeal, butter, flour, sugar"},
+			}
+			if !reflect.DeepEqual(it.Kinds, want) {
+				t.Errorf("Cookies kinds = %+v, want %+v", it.Kinds, want)
+			}
+			return
+		}
 	}
+	t.Fatal("no Cookies item in the menu")
 }
 
 func firstDivergence(a, b string) int {

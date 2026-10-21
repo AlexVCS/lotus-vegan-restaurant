@@ -1,28 +1,46 @@
+// Package menu holds the Lotus menu: the types, the validation, and the
+// generated data (data.gen.go) that the site renders with GoFastr
+// components. menu.json at the repo root is the source of truth; edit it
+// and run `go generate ./...` to regenerate data.gen.go.
 package menu
 
 import (
 	"encoding/json"
 	"fmt"
+	"go/format"
 	"os"
 	"path/filepath"
 	"regexp"
+	"strconv"
 	"strings"
 )
 
-const (
-	BeginMarker = "      <!-- BEGIN GENERATED MENU (edit menu.json, run go generate) -->"
-	EndMarker   = "      <!-- END GENERATED MENU -->"
+var (
+	slugPattern  = regexp.MustCompile(`^[a-z0-9-]+$`)
+	validDietary = map[string]bool{"gf": true, "sf": true}
 )
 
-var (
-	slugPattern    = regexp.MustCompile(`^[a-z0-9-]+$`)
-	validDietary   = map[string]bool{"gf": true, "sf": true}
-	htmlEsc        = strings.NewReplacer("&", "&amp;", "<", "&lt;", ">", "&gt;")
-	dietaryLabels  = map[string]struct{ label, text string }{
-		"gf": {"GF", "Gluten-free"},
-		"sf": {"SF", "Soy-free"},
+// Dietary describes one dietary mark: its key in menu.json ("gf"), the
+// badge text and its meaning.
+type Dietary struct {
+	Key, Label, Text string
+}
+
+// DietaryMarks lists the dietary marks in legend order.
+var DietaryMarks = []Dietary{
+	{Key: "gf", Label: "GF", Text: "Gluten-free"},
+	{Key: "sf", Label: "SF", Text: "Soy-free"},
+}
+
+// DietaryInfo returns the description of a dietary mark.
+func DietaryInfo(key string) (Dietary, bool) {
+	for _, d := range DietaryMarks {
+		if d.Key == key {
+			return d, true
+		}
 	}
-)
+	return Dietary{}, false
+}
 
 type Menu struct {
 	AllergyNote AllergyNote `json:"allergyNote"`
@@ -39,19 +57,25 @@ type Group struct {
 	Title    string `json:"title"`
 	NavLabel string `json:"navLabel"`
 	Note     string `json:"note,omitempty"`
-	Items    []Item   `json:"items"`
+	Items    []Item `json:"items"`
 }
 
+// Item is one dish. It may carry a description, kinds, or both.
 type Item struct {
-	Title         string   `json:"title"`
-	Price         string   `json:"price,omitempty"`
-	Description   string   `json:"description,omitempty"`
+	Title       string `json:"title"`
+	Price       string `json:"price,omitempty"`
+	Description string `json:"description,omitempty"`
+	// Kinds lists the varieties of a dish sold under one title and price
+	// (the cookies: chocolate chip, oatmeal), each with its ingredients.
+	Kinds         []Kind   `json:"kinds,omitempty"`
 	Dietary       []string `json:"dietary,omitempty"`
 	CopyPreserved bool     `json:"copyPreserved,omitempty"`
 }
 
-func esc(s string) string {
-	return htmlEsc.Replace(s)
+// Kind is one variety of an Item.
+type Kind struct {
+	Name        string `json:"name"`
+	Ingredients string `json:"ingredients"`
 }
 
 func Load(path string) (*Menu, error) {
@@ -97,6 +121,11 @@ func (m *Menu) Validate() error {
 			if strings.TrimSpace(item.Title) == "" {
 				return fmt.Errorf("group %q: item title is required", g.Slug)
 			}
+			for _, k := range item.Kinds {
+				if strings.TrimSpace(k.Name) == "" || strings.TrimSpace(k.Ingredients) == "" {
+					return fmt.Errorf("group %q item %q: each kind needs a name and ingredients", g.Slug, item.Title)
+				}
+			}
 			for _, d := range item.Dietary {
 				if !validDietary[d] {
 					return fmt.Errorf("group %q item %q: invalid dietary %q", g.Slug, item.Title, d)
@@ -127,165 +156,52 @@ func RepoRoot() (string, error) {
 	}
 }
 
-func ExtractBetweenMarkers(content string) (string, error) {
-	lines := strings.Split(content, "\n")
-	begin, end, err := findMarkerLines(lines)
-	if err != nil {
-		return "", err
-	}
-	return strings.Join(lines[begin+1:end], "\n"), nil
-}
-
-func findMarkerLines(lines []string) (begin, end int, err error) {
-	begin = -1
-	end = -1
-	for i, line := range lines {
-		switch line {
-		case BeginMarker:
-			if begin >= 0 {
-				return -1, -1, fmt.Errorf("duplicate begin marker at line %d", i+1)
-			}
-			begin = i
-		case EndMarker:
-			if end >= 0 {
-				return -1, -1, fmt.Errorf("duplicate end marker at line %d", i+1)
-			}
-			end = i
-		}
-	}
-	if begin < 0 {
-		return -1, -1, fmt.Errorf("begin marker not found")
-	}
-	if end < 0 {
-		return -1, -1, fmt.Errorf("end marker not found")
-	}
-	if end <= begin {
-		return -1, -1, fmt.Errorf("end marker before begin marker")
-	}
-	return begin, end, nil
-}
-
-func SpliceFile(path, generated string) (bool, error) {
-	data, err := os.ReadFile(path)
-	if err != nil {
-		return false, err
-	}
-	content := string(data)
-	lines := strings.Split(content, "\n")
-	begin, end, err := findMarkerLines(lines)
-	if err != nil {
-		return false, fmt.Errorf("%s: %w", path, err)
-	}
-
-	newMiddle := generated
-	if newMiddle != "" && !strings.HasSuffix(newMiddle, "\n") {
-		newMiddle += "\n"
-	}
-
-	before := strings.Join(lines[:begin+1], "\n")
-	after := strings.Join(lines[end:], "\n")
-	newContent := before + "\n" + newMiddle + after
-
-	if newContent == content {
-		return false, nil
-	}
-	return true, os.WriteFile(path, []byte(newContent), 0o644)
-}
-
-func Render(m *Menu) string {
+// GoSource renders m as the Go source of data.gen.go: a package-level
+// Data value holding the whole menu, gofmt'd.
+func GoSource(m *Menu) ([]byte, error) {
 	var b strings.Builder
-	tooltipN := 0
-
-	b.WriteString("      <!-- The full menu is static HTML so it remains available without JavaScript. -->\n")
-	b.WriteString("      <nav class=\"menu-jump\" id=\"menu-jump\" aria-label=\"Menu categories\">\n")
+	q := strconv.Quote
+	b.WriteString("// Code generated by cmd/genmenu from menu.json. DO NOT EDIT.\n\n")
+	b.WriteString("package menu\n\n")
+	b.WriteString("// Data is the Lotus menu, generated from menu.json.\n")
+	b.WriteString("var Data = &Menu{\n")
+	fmt.Fprintf(&b, "AllergyNote: AllergyNote{Label: %s, Text: %s},\n", q(m.AllergyNote.Label), q(m.AllergyNote.Text))
+	b.WriteString("Groups: []Group{\n")
 	for _, g := range m.Groups {
-		b.WriteString("        <a href=\"#menu-")
-		b.WriteString(esc(g.Slug))
-		b.WriteString("\">")
-		b.WriteString(esc(g.NavLabel))
-		b.WriteString("</a>\n")
-	}
-	b.WriteString("      </nav>\n")
-	b.WriteString("      <div class=\"menu-groups\" id=\"menu-groups\">\n")
-
-	for gi, g := range m.Groups {
-		b.WriteString("      <details class=\"menu-group\" id=\"menu-")
-		b.WriteString(esc(g.Slug))
-		b.WriteString("\"")
-		if gi == 0 {
-			b.WriteString(" open")
-		}
-		b.WriteString(">\n")
-		b.WriteString("        <summary>\n")
-		fmt.Fprintf(&b, "          <span class=\"menu-group-index\">%02d</span>\n", gi+1)
-		b.WriteString("          <h3>")
-		b.WriteString(esc(g.Title))
-		b.WriteString("</h3>\n")
-		b.WriteString("        </summary>\n")
-		b.WriteString("        <div class=\"menu-items\">\n")
-
+		fmt.Fprintf(&b, "{\nSlug: %s,\nTitle: %s,\nNavLabel: %s,\n", q(g.Slug), q(g.Title), q(g.NavLabel))
 		if g.Note != "" {
-			b.WriteString("          <p class=\"menu-category-note\">")
-			b.WriteString(esc(g.Note))
-			b.WriteString("</p>\n")
+			fmt.Fprintf(&b, "Note: %s,\n", q(g.Note))
 		}
-
-		for _, item := range g.Items {
-			renderItem(&b, item, &tooltipN)
+		b.WriteString("Items: []Item{\n")
+		for _, it := range g.Items {
+			fmt.Fprintf(&b, "{Title: %s", q(it.Title))
+			if it.Price != "" {
+				fmt.Fprintf(&b, ", Price: %s", q(it.Price))
+			}
+			if it.Description != "" {
+				fmt.Fprintf(&b, ", Description: %s", q(it.Description))
+			}
+			if len(it.Kinds) > 0 {
+				b.WriteString(", Kinds: []Kind{\n")
+				for _, k := range it.Kinds {
+					fmt.Fprintf(&b, "{Name: %s, Ingredients: %s},\n", q(k.Name), q(k.Ingredients))
+				}
+				b.WriteString("}")
+			}
+			if len(it.Dietary) > 0 {
+				codes := make([]string, len(it.Dietary))
+				for i, d := range it.Dietary {
+					codes[i] = q(d)
+				}
+				fmt.Fprintf(&b, ", Dietary: []string{%s}", strings.Join(codes, ", "))
+			}
+			if it.CopyPreserved {
+				b.WriteString(", CopyPreserved: true")
+			}
+			b.WriteString("},\n")
 		}
-
-		b.WriteString("        </div>\n")
-		b.WriteString("      </details>\n")
+		b.WriteString("},\n},\n")
 	}
-
-	b.WriteString("      </div>\n")
-	b.WriteString("      <div class=\"menu-notice\" id=\"allergy-note\">\n")
-	b.WriteString("        <span>")
-	b.WriteString(esc(m.AllergyNote.Label))
-	b.WriteString("</span>\n")
-	b.WriteString("        <p>")
-	b.WriteString(esc(m.AllergyNote.Text))
-	b.WriteString("</p>\n")
-	b.WriteString("      </div>")
-
-	return b.String()
-}
-
-func renderItem(b *strings.Builder, item Item, tooltipN *int) {
-	b.WriteString("          <article class=\"menu-item")
-	if item.CopyPreserved {
-		b.WriteString(" menu-item-copy-preserved")
-	}
-	b.WriteString("\">\n")
-	b.WriteString("            <h4 class=\"menu-item-name\">\n")
-	b.WriteString("              <span class=\"menu-item-heading\">\n")
-	b.WriteString("                <span class=\"menu-item-title\">")
-	b.WriteString(esc(item.Title))
-	b.WriteString("</span>")
-	if len(item.Dietary) > 0 {
-		b.WriteString("<span class=\"menu-item-dietary\">")
-		for _, code := range item.Dietary {
-			*tooltipN++
-			info := dietaryLabels[code]
-			fmt.Fprintf(b,
-				`<span class="dietary-badge dietary-badge-tooltip dietary-badge-%s" tabindex="0" aria-label="%s" aria-describedby="dietary-tooltip-%d"><span aria-hidden="true">%s</span><span class="dietary-tooltip" id="dietary-tooltip-%d" role="tooltip">%s</span></span>`,
-				code, info.label, *tooltipN, info.label, *tooltipN, info.text,
-			)
-		}
-		b.WriteString("</span>")
-	}
-	b.WriteString("\n              </span>\n")
-	if item.Price != "" {
-		b.WriteString("            <i class=\"dots\" aria-hidden=\"true\"></i>\n")
-		b.WriteString("            <span class=\"menu-price\">")
-		b.WriteString(esc(item.Price))
-		b.WriteString("</span>\n")
-	}
-	b.WriteString("            </h4>\n")
-	if item.Description != "" {
-		b.WriteString("          <p>")
-		b.WriteString(esc(item.Description))
-		b.WriteString("</p>\n")
-	}
-	b.WriteString("          </article>\n")
+	b.WriteString("},\n}\n")
+	return format.Source([]byte(b.String()))
 }

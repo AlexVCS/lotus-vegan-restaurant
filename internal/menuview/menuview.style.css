@@ -1,0 +1,84 @@
+/* The Lotus menu: the parts the kit components do not draw. It always sits
+   on the forest band (internal/theme ForestBand), so the colours here are
+   that band's tokens. */
+
+:scope.menu {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+/* The jump strip scrolls sideways on narrow screens instead of wrapping
+   into a wall of buttons. */
+.jump {
+  overflow-x: auto;
+  padding-block: var(--spacing-sm);
+  scrollbar-width: thin;
+}
+
+/* The jump target sits inside the group's <details>; the margin keeps
+   the group's summary visible under the sticky header. */
+.items {
+  scroll-margin-top: calc(var(--size-header-height) + var(--spacing-3xl) + var(--spacing-lg));
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  padding-block: var(--spacing-md) var(--spacing-lg);
+}
+
+.note {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+/* An item sold in several kinds (the cookies): one row per kind, the
+   name over its ingredients, a hairline above each row. The first
+   hairline sets the list off from the card head; the last row has no
+   padding under it, so the card ends where the text does. */
+.kinds {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+.kind-row {
+  padding-block: var(--spacing-md);
+  border-top: var(--stroke-thin) solid var(--color-border);
+}
+
+.kind-row:last-child {
+  padding-block-end: 0;
+}
+
+.kind-name {
+  display: block;
+  color: var(--color-text);
+  font-weight: var(--font-weight-semibold);
+}
+
+.kind-ingredients {
+  display: block;
+  color: var(--color-text-muted);
+}
+
+.price {
+  color: var(--color-accent);
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+}
+
+:scope.legend {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+/* The allergy note closes the menu: extra room above it so it reads as
+   its own block, not part of the last group. The scroll margin keeps
+   the "Allergy note" link from landing it under the sticky header. */
+.allergy {
+  margin-block-start: var(--spacing-md);
+  scroll-margin-top: calc(var(--size-header-height) + var(--spacing-lg));
+}
