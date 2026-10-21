@@ -17,7 +17,9 @@ type HomeScreen struct{}
 func (s *HomeScreen) Render() render.HTML {
 	return ui.Stack(ui.StackConfig{Gap: ui.GapNone},
 		ui.Container(ui.ContainerConfig{Width: ui.ContainerPage, Pad: ui.ContainerPadPage}, hero()),
-		ui.Themed(limeBand, ui.Container(ui.ContainerConfig{Width: ui.ContainerPage, Pad: ui.ContainerPadPage, Class: HomeStyle.FactsBand()}, quickFacts())),
+		// The quick facts take no block padding: the columns' own height
+		// and inset make the lime band. The page gutter still applies inline.
+		ui.Themed(limeBand, ui.Container(ui.ContainerConfig{Width: ui.ContainerPage, Pad: ui.ContainerPadNone}, quickFacts())),
 		ui.Container(ui.ContainerConfig{Width: ui.ContainerPage, Pad: ui.ContainerPadPage}, story()),
 		ui.Themed(goldBand, ui.Container(ui.ContainerConfig{Width: ui.ContainerPage, Pad: ui.ContainerPadPage}, pizza())),
 		ui.Themed(forestBand, ui.Container(ui.ContainerConfig{Width: ui.ContainerPage, Pad: ui.ContainerPadPage},

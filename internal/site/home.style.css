@@ -60,13 +60,10 @@
 }
 
 /* The quick-facts strip under the hero: a thin band of three ruled
-   columns, each fact in strong type over its detail line. The band
-   drops the container's page padding; the columns' own height and
-   inset make the band. Narrower screens stack them as ruled rows. */
-.facts-band {
-  --ui-container-pad-start: 0;
-  --ui-container-pad-end: 0;
-}
+   columns, each fact in strong type over its detail line. Its container
+   takes no block padding (Pad: ContainerPadNone in home.go); the
+   columns' own height and inset make the band. Narrower screens stack
+   them as ruled rows. */
 
 .quick-facts {
   display: grid;
